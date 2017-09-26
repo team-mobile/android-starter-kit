@@ -2,8 +2,9 @@ package starter.kit.rx.app;
 
 import android.content.Context;
 import android.support.multidex.MultiDex;
+
 import com.facebook.drawee.backends.pipeline.Fresco;
-import com.fasterxml.jackson.databind.ObjectMapper;
+
 import starter.kit.app.StarterApp;
 import starter.kit.model.entity.Account;
 import starter.kit.retrofit.Network;
@@ -17,7 +18,7 @@ public class RxApp extends StarterApp {
     new Network.Builder()
         .networkDebug(true)
         .accept(Profile.API_ACCEPT)
-        .baseUrl(Profile.API_ENDPOINT)
+        .baseUrl(Profile.API_BASE_URL)
         .build();
 
     Fresco.initialize(appContext());

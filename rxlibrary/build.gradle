@@ -8,6 +8,7 @@ repositories {
 buildscript {
   repositories {
     jcenter()
+    google()
     maven { url "https://clojars.org/repo/" }
     maven { url "https://jitpack.io" }
     maven { url "https://plugins.gradle.org/m2/" }

@@ -12,7 +12,7 @@ public final class ErrorHandler {
       try {
         return retrofitException.getErrorBodyAs(ErrorResponse.class);
       } catch (IOException e) {
-        e.printStackTrace();
+        // e.printStackTrace();
         return new ErrorResponse(500, e.getLocalizedMessage());
       }
     }

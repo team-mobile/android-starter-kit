@@ -1,7 +1,9 @@
 package starter.kit.retrofit;
 
 import android.text.TextUtils;
+
 import com.orhanobut.logger.Logger;
+
 import okhttp3.Headers;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;

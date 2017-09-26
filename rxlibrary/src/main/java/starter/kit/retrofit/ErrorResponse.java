@@ -5,8 +5,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonIgnoreProperties(ignoreUnknown = true) public class ErrorResponse {
 
-  @JsonProperty("status_code") public int mStatusCode;
-  @JsonProperty("message") public String mMessage;
+  @JsonProperty("errcode") public int mStatusCode;
+  @JsonProperty("errmsg")
+  public String mMessage;
+  @JsonProperty("message")
   public String mTitle;
 
   public ErrorResponse() {
@@ -24,7 +26,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
   }
 
   public String getMessage() {
-    return mMessage == null ? "" : mMessage;
+    return mMessage == null ? mTitle : mMessage;
   }
 
   public int getStatusCode() {

@@ -3,9 +3,11 @@ package starter.kit.app;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
+
 import io.reactivex.functions.Action;
 import nucleus5.presenter.Presenter;
 import starter.kit.retrofit.ErrorResponse;
+import starter.kit.rx.R;
 import starter.kit.util.ErrorHandler;
 import starter.kit.util.NetworkContract;
 import starter.kit.util.RxUtils;
@@ -86,7 +88,9 @@ import support.ui.content.RequiresContent;
   @Override public void onError(Throwable throwable) {
     mErrorResponse = ErrorHandler.handleThrowable(throwable);
     if (mErrorResponse != null) {
-      getContentPresenter().buildEmptyTitle(mErrorResponse.getMessage());
+      getContentPresenter().buildErrorSubtitle(mErrorResponse.getMessage());
+      getContentPresenter().buildErrorTitle(String.valueOf(mErrorResponse.getStatusCode()));
+      getContentPresenter().buildErrorImageView(R.drawable.error);
     }
   }
 
