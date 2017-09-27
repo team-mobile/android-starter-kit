@@ -33,7 +33,8 @@ public class SimpleHudActivity extends StarterActivity {
     SimpleHUD.backgroundHexColor = "#aa817EDF";
   }
 
-  @OnClick(R.id.btn_simple_hud) public void onClick(View view) {
+  @OnClick(R.id.btn_simple_hud)
+  public void onClick(View view) {
     switch (view.getId()) {
       case R.id.btn_simple_hud:
         doSimpleHud();

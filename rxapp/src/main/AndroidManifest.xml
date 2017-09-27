@@ -57,7 +57,25 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="starter.kit.rx.app.feature.main.MainActivity" />
         </activity>
-        <activity android:name=".feature.crop.ImageCropActivity" />
+        <activity
+            android:name=".feature.crop.ImageCropActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Close">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="starter.kit.rx.app.feature.main.MainActivity" />
+        </activity>
+
+        <activity
+            android:name="com.yalantis.ucrop.UCropActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+
+        <activity android:name=".feature.crop.CropResultActivity" >
+        </activity>
+
+
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="@string/file_provider_authorities"
@@ -67,12 +85,6 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_provider_paths" />
         </provider>
-
-        <activity
-            android:name="com.yalantis.ucrop.UCropActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <activity android:name=".feature.crop.CropResultActivity"></activity>
     </application>
 
 </manifest>
