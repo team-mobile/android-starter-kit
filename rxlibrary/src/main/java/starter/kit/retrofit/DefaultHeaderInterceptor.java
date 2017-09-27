@@ -11,8 +11,10 @@ import okhttp3.Response;
 import starter.kit.account.AccountManager;
 import support.ui.utilities.Strings;
 
+import static starter.kit.model.config.Constant.BASE_URL_HEADER_KEY;
+
 /**
- * @author <a href="mailto:smartydroid.com@gmail.com">Smartydroid</a>
+ * @author rener
  */
 public class DefaultHeaderInterceptor implements HeaderInterceptor {
 
@@ -34,10 +36,10 @@ public class DefaultHeaderInterceptor implements HeaderInterceptor {
         if (!Strings.isBlank(token)) {
             builder.set("Authorization", "Bearer " + token);
         }
-        String baseUrl = originalRequest.header("base_url");
+        String baseUrl = originalRequest.header(BASE_URL_HEADER_KEY);
         if (!TextUtils.isEmpty(baseUrl)) {
             Request.Builder oldBuilder = originalRequest.newBuilder();
-            oldBuilder.removeHeader("base_url");
+            oldBuilder.removeHeader(BASE_URL_HEADER_KEY);
             HttpUrl newBaseUrl = HttpUrl.parse(baseUrl);
             //从request中获取原有的HttpUrl实例oldHttpUrl
             HttpUrl oldHttpUrl = originalRequest.url();

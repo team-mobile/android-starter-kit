@@ -7,6 +7,7 @@ import retrofit2.http.Query;
 import starter.kit.pagination.LengthAwarePaginator;
 import starter.kit.rx.app.model.entity.xy.News;
 
+import static starter.kit.model.config.Constant.BASE_URL_HEADER_KEY;
 import static starter.kit.rx.app.Profile.JX_API_BASE_URL;
 
 /**
@@ -15,7 +16,7 @@ import static starter.kit.rx.app.Profile.JX_API_BASE_URL;
 
 public interface NewsService {
 
-    @Headers("base_url:" + JX_API_BASE_URL)
+    @Headers(BASE_URL_HEADER_KEY + ":" + JX_API_BASE_URL)
     @GET("/news/getXYNews")
     Observable<LengthAwarePaginator<News>> fetchNewsWithPage(
             @Query("pageIndex") int pageIndex,

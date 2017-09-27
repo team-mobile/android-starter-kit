@@ -11,7 +11,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.util.TypedValue;
 import android.view.View;
-import butterknife.BindView;
+
 import com.mikepenz.fontawesome_typeface_library.FontAwesome;
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
@@ -21,17 +21,27 @@ import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
+
 import java.util.ArrayList;
 import java.util.List;
+
+import butterknife.BindView;
 import starter.kit.app.StarterActivity;
 import starter.kit.rx.app.R;
 import starter.kit.rx.app.RxApp;
 import starter.kit.rx.app.feature.auth.LoginActivity;
 import starter.kit.rx.app.feature.content.ContentActivity;
+import starter.kit.rx.app.feature.crop.ImageCropActivity;
 import starter.kit.rx.app.feature.feed.IdFeedFragment;
 import starter.kit.rx.app.feature.feed.NoPageFeedFragment;
 import starter.kit.rx.app.feature.feed.PageFeedFragment;
 import starter.kit.rx.app.feature.util.SimpleHudActivity;
+
+import static starter.kit.rx.app.model.config.Constant.TAG_CONTENT;
+import static starter.kit.rx.app.model.config.Constant.TAG_FEEDS;
+import static starter.kit.rx.app.model.config.Constant.TAG_IMAGE_CROP;
+import static starter.kit.rx.app.model.config.Constant.TAG_LOGIN;
+import static starter.kit.rx.app.model.config.Constant.TAG_SIMPLE_HUD;
 
 public class MainActivity extends StarterActivity implements Drawer.OnDrawerItemClickListener {
 
@@ -106,7 +116,8 @@ public class MainActivity extends StarterActivity implements Drawer.OnDrawerItem
             new PrimaryDrawerItem().withName("Feeds").withIcon(FontAwesome.Icon.faw_android).withTag(TAG_FEEDS),
             new PrimaryDrawerItem().withName("Login").withIcon(FontAwesome.Icon.faw_adjust).withTag(TAG_LOGIN),
             new PrimaryDrawerItem().withName("SimpleHud").withIcon(FontAwesome.Icon.faw_adjust).withTag(TAG_SIMPLE_HUD),
-            new PrimaryDrawerItem().withName("Content").withIcon(FontAwesome.Icon.faw_connectdevelop).withTag(TAG_CONTENT)
+            new PrimaryDrawerItem().withName("Content").withIcon(FontAwesome.Icon.faw_connectdevelop).withTag(TAG_CONTENT),
+            new PrimaryDrawerItem().withName("ImageCrop").withIcon(FontAwesome.Icon.faw_adjust).withTag(TAG_IMAGE_CROP)
         )
         .addStickyDrawerItems(
             new PrimaryDrawerItem().withName(R.string.drawer_item_settings).withIcon(FontAwesome.Icon.faw_cog),
@@ -118,10 +129,7 @@ public class MainActivity extends StarterActivity implements Drawer.OnDrawerItem
         .build();
   }
 
-  private static final String TAG_FEEDS = "feeds";
-  private static final String TAG_LOGIN = "login";
-  private static final String TAG_SIMPLE_HUD = "SimpleHud";
-  private static final String TAG_CONTENT = "ContentDemo";
+
 
   @Override public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
     if (TAG_LOGIN.equals(drawerItem.getTag())) {
@@ -134,6 +142,10 @@ public class MainActivity extends StarterActivity implements Drawer.OnDrawerItem
     }
     if (TAG_CONTENT.equals(drawerItem.getTag())) {
       startActivity(new Intent(MainActivity.this, ContentActivity.class));
+      return true;
+    }
+    if (TAG_IMAGE_CROP.equals(drawerItem.getTag())) {
+      startActivity(new Intent(MainActivity.this, ImageCropActivity.class));
       return true;
     }
     return false;

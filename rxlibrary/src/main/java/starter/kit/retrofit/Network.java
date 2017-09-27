@@ -4,6 +4,8 @@ import android.text.TextUtils;
 
 import com.orhanobut.logger.Logger;
 
+import java.util.concurrent.TimeUnit;
+
 import okhttp3.Headers;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -13,6 +15,9 @@ import support.ui.app.AppInfo;
 import support.ui.app.SupportApp;
 import support.ui.utilities.Preconditions;
 import support.ui.utilities.Strings;
+
+import static starter.kit.model.config.Constant.TIMEOUT_CONNECTION;
+import static starter.kit.model.config.Constant.TIMEOUT_READ;
 
 public final class Network {
 
@@ -87,6 +92,10 @@ public final class Network {
         DefaultHeaderInterceptor headerInterceptor = new DefaultHeaderInterceptor(headerBuilder);
 
         builder.addInterceptor(headerInterceptor);
+        // 超时设置
+        builder.readTimeout(TIMEOUT_READ, TimeUnit.SECONDS)
+                .connectTimeout(TIMEOUT_CONNECTION,TimeUnit.SECONDS);
+
         mClient = builder.build();
       }
     }
