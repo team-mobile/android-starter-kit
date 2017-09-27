@@ -11,7 +11,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.util.TypedValue;
 import android.view.View;
-import butterknife.BindView;
+
 import com.mikepenz.fontawesome_typeface_library.FontAwesome;
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
@@ -21,8 +21,11 @@ import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
+
 import java.util.ArrayList;
 import java.util.List;
+
+import butterknife.BindView;
 import starter.kit.app.StarterActivity;
 import starter.kit.rx.app.R;
 import starter.kit.rx.app.RxApp;
@@ -32,6 +35,14 @@ import starter.kit.rx.app.feature.feed.IdFeedFragment;
 import starter.kit.rx.app.feature.feed.NoPageFeedFragment;
 import starter.kit.rx.app.feature.feed.PageFeedFragment;
 import starter.kit.rx.app.feature.util.SimpleHudActivity;
+
+import static starter.kit.rx.app.model.config.Constant.PROFILE_AVATARS;
+import static starter.kit.rx.app.model.config.Constant.PROFILE_EMAIL;
+import static starter.kit.rx.app.model.config.Constant.PROFILE_USER_NAME;
+import static starter.kit.rx.app.model.config.Constant.TAG_CONTENT;
+import static starter.kit.rx.app.model.config.Constant.TAG_FEEDS;
+import static starter.kit.rx.app.model.config.Constant.TAG_LOGIN;
+import static starter.kit.rx.app.model.config.Constant.TAG_SIMPLE_HUD;
 
 public class MainActivity extends StarterActivity implements Drawer.OnDrawerItemClickListener {
 
@@ -86,9 +97,9 @@ public class MainActivity extends StarterActivity implements Drawer.OnDrawerItem
   private void setupDrawer(Bundle savedInstanceState) {
     // Create a few sample profile
     // NOTE you have to define the loader logic too. See the CustomApplication for more details
-    final IProfile profile = new ProfileDrawerItem().withName("Smartydroid")
-        .withEmail("smartydroid@gmail.com")
-        .withIcon("https://avatars2.githubusercontent.com/u/13810934?v=3&s=460");
+    final IProfile profile = new ProfileDrawerItem().withName(PROFILE_USER_NAME)
+        .withEmail(PROFILE_EMAIL)
+        .withIcon(PROFILE_AVATARS);
 
     // Create the AccountHeader
     headerResult = new AccountHeaderBuilder().withActivity(this)
@@ -118,10 +129,7 @@ public class MainActivity extends StarterActivity implements Drawer.OnDrawerItem
         .build();
   }
 
-  private static final String TAG_FEEDS = "feeds";
-  private static final String TAG_LOGIN = "login";
-  private static final String TAG_SIMPLE_HUD = "SimpleHud";
-  private static final String TAG_CONTENT = "ContentDemo";
+
 
   @Override public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
     if (TAG_LOGIN.equals(drawerItem.getTag())) {
