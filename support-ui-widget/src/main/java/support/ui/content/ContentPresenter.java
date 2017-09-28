@@ -267,7 +267,9 @@ public final class ContentPresenter {
         parent.removeView(view);
       }
     }
-    container.addView(view, layoutParams);
+    try {
+      container.addView(view, layoutParams);
+    }catch (Exception e){}
     mCurrentId = viewId;
     return view;
   }

@@ -12,13 +12,13 @@ import support.ui.collect.Lists;
 @JsonIgnoreProperties(ignoreUnknown = true) public class Paginator<T extends Entity>
     extends AbstractPaginator<T> {
 
-  @JsonProperty("total") private int total;
+  @JsonProperty("totals") private int total;
 
-  @JsonProperty("per_page") private int perPage;
-  @JsonProperty("current_page") private int currentPage;
-  @JsonProperty("last_page") private int lastPage;
+  @JsonProperty("pageSize") private int perPage;
+  @JsonProperty("pages") private int currentPage;
+  @JsonProperty("pageNumber") private int lastPage;
 
-  @JsonProperty("data") private ArrayList<T> items;
+  @JsonProperty("rows") private ArrayList<T> items;
 
   @Override public ArrayList<T> items() {
     return this.items == null ? Lists.newArrayList() : this.items;

@@ -1,5 +1,7 @@
 package starter.kit.retrofit;
 
+import com.orhanobut.logger.Logger;
+
 import java.io.IOException;
 import java.lang.annotation.Annotation;
 import okhttp3.ResponseBody;
@@ -78,6 +80,7 @@ public class RetrofitException extends Throwable {
       return null;
     }
     Converter<ResponseBody, T> converter = retrofit.responseBodyConverter(type, new Annotation[0]);
+    Logger.d(response.message()+" \n "+ response.code()+" \n "+ response.errorBody().string());
     return converter.convert(response.errorBody());
   }
 }

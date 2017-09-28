@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.io.IOException;
+
 import io.reactivex.functions.Action;
 import nucleus5.presenter.Presenter;
 import starter.kit.retrofit.ErrorResponse;
@@ -91,6 +93,13 @@ import support.ui.content.RequiresContent;
       getContentPresenter().buildErrorSubtitle(mErrorResponse.getMessage());
       getContentPresenter().buildErrorTitle(String.valueOf(mErrorResponse.getStatusCode()));
       getContentPresenter().buildErrorImageView(R.drawable.error);
+    } else {
+      getContentPresenter().buildErrorSubtitle(throwable.getMessage());
+      getContentPresenter().buildErrorTitle(R.string.starter_error_title_some_question_placeholder);
+      getContentPresenter().buildErrorImageView(R.drawable.error);
+    }
+    if (throwable instanceof IOException){
+      getContentPresenter().buildErrorImageView(R.drawable.support_ui_network_error);
     }
   }
 

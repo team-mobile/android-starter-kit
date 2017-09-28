@@ -6,22 +6,27 @@ package starter.kit.rx.app.feature.feed;
 
 import android.content.Context;
 import android.net.Uri;
+import android.text.TextUtils;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
 import com.facebook.drawee.view.SimpleDraweeView;
+
 import java.util.ArrayList;
 import java.util.List;
-import starter.kit.rx.app.R;
-import starter.kit.rx.app.model.entity.Feed;
-import starter.kit.rx.app.model.entity.Image;
-import starter.kit.rx.app.util.NineGridAdapter;
-import support.ui.widget.NineGirdView;
-import support.ui.adapters.EasyViewHolder;
-import support.ui.utilities.ViewUtils;
 
-public class FeedsViewHolder extends EasyViewHolder<Feed> {
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import starter.kit.rx.app.R;
+import starter.kit.rx.app.model.entity.Image;
+import starter.kit.rx.app.model.entity.xy.News;
+import starter.kit.rx.app.util.NineGridAdapter;
+import support.ui.adapters.EasyViewHolder;
+import support.ui.widget.NineGirdView;
+
+import static starter.kit.rx.app.model.config.Constant.IMAGE_DEFAULT;
+
+public class FeedsViewHolder extends EasyViewHolder<News> {
 
   @BindView(R.id.image_feed_user_avatar) SimpleDraweeView mAvatarView;
   @BindView(R.id.text_feed_username) TextView mUsernameTextView;
@@ -35,17 +40,17 @@ public class FeedsViewHolder extends EasyViewHolder<Feed> {
     mNineGridView.setStyle(NineGirdView.STYLE_GRID);
   }
 
-  @Override public void bindTo(int position, Feed feed) {
-    mAvatarView.setImageURI(feed.userInfo.uri());
-    mUsernameTextView.setText(position + "->" + feed.userInfo.nickname);
-    mContentTextView.setText(feed.content);
-    ArrayList<Image> images = feed.images;
-    if (images != null && images.size() > 0) {
-      ViewUtils.setGone(mNineGridView, false);
-      mNineGridView.notifyDataSetChanged(buildImageUrls(feed.images));
-    } else {
-      ViewUtils.setGone(mNineGridView, true);
-    }
+  @Override public void bindTo(int position, News news) {
+    mAvatarView.setImageURI(TextUtils.isEmpty(news.thumbnail)? IMAGE_DEFAULT :news.thumbnail);
+    mUsernameTextView.setText(position + "->" + news.title);
+    mContentTextView.setText(news.description);
+//    ArrayList<Image> images = news.thumbnail;
+//    if (images != null && images.size() > 0) {
+//      ViewUtils.setGone(mNineGridView, false);
+//      // mNineGridView.notifyDataSetChanged(buildImageUrls(feed.images));
+//    } else {
+//      ViewUtils.setGone(mNineGridView, true);
+//    }
   }
 
   private List<Uri> buildImageUrls(ArrayList<Image> images) {

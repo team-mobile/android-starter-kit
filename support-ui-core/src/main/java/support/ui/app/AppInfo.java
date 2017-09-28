@@ -24,6 +24,38 @@ public final class AppInfo {
   public int screenHeight;
   public String languageCode;
 
+  //网络连接
+  private static boolean isWifi;//wifi是否连接
+  private static boolean isMobile;//移动网络是否连接
+  private static boolean isNetworkConnect;//是否有网
+
+  public static boolean isWifi() {
+    return isWifi;
+  }
+
+  public static void setIsWifi(boolean isWifi) {
+    AppInfo.isWifi = isWifi;
+  }
+
+  public static boolean isMobile() {
+    return isMobile;
+  }
+
+  public static void setIsMobile(boolean isMobile) {
+    AppInfo.isMobile = isMobile;
+  }
+
+  public static boolean isNetworkConnect() {
+    return isNetworkConnect;
+  }
+
+  public static void setIsNetworkConnect(boolean isNetworkConnect) {
+    AppInfo.isNetworkConnect = isNetworkConnect;
+  }
+
+
+
+
   private void initLanguageCode() {
     Locale locale = Locale.getDefault();
     String language = locale.getLanguage();

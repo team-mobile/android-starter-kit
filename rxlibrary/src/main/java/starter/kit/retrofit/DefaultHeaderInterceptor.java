@@ -27,6 +27,7 @@ public class DefaultHeaderInterceptor implements HeaderInterceptor {
     @Override
     public Response intercept(Chain chain) throws IOException {
         Request originalRequest = chain.request();
+
         if (builder == null) {
             // builder = new Headers.Builder();
             builder = originalRequest.headers().newBuilder();
@@ -36,6 +37,7 @@ public class DefaultHeaderInterceptor implements HeaderInterceptor {
         if (!Strings.isBlank(token)) {
             builder.set("Authorization", "Bearer " + token);
         }
+
         String baseUrl = originalRequest.header(BASE_URL_HEADER_KEY);
         if (!TextUtils.isEmpty(baseUrl)) {
             Request.Builder oldBuilder = originalRequest.newBuilder();
@@ -61,4 +63,6 @@ public class DefaultHeaderInterceptor implements HeaderInterceptor {
 
         return chain.proceed(compressedRequest);
     }
+
+
 }
