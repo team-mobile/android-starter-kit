@@ -6,13 +6,17 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import butterknife.BindView;
+
 import com.jakewharton.rxbinding2.view.RxView;
 import com.jakewharton.rxbinding2.widget.RxTextView;
+import com.orhanobut.logger.Logger;
+
+import java.util.concurrent.TimeUnit;
+
+import butterknife.BindView;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
-import java.util.concurrent.TimeUnit;
 import nucleus5.factory.RequiresPresenter;
 import starter.kit.app.StarterActivity;
 import starter.kit.retrofit.ErrorResponse;
@@ -157,6 +161,7 @@ public class LoginActivity extends StarterActivity<AuthPresenter> implements
   }
 
   @Override public void onError(Throwable exception) {
+    Logger.e(exception,exception.getMessage());
     ErrorResponse errorResponse = ErrorHandler.handleThrowable(exception);
     SimpleHUD.showErrorMessage(this, errorResponse.getMessage());
   }

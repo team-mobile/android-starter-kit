@@ -1,6 +1,8 @@
 package starter.kit.app;
 
 import android.os.Bundle;
+
+import com.orhanobut.logger.Logger;
 import com.trello.rxlifecycle2.android.FragmentEvent;
 import com.trello.rxlifecycle2.android.RxLifecycleAndroid;
 import io.reactivex.Observable;
@@ -34,6 +36,7 @@ public abstract class NetworkPresenter<T, ViewType extends NetworkContract.View>
     }, new BiConsumer<ViewType, T>() {
       @Override public void accept(@NonNull ViewType viewType, @NonNull T item) throws Exception {
         //noinspection unchecked
+        Logger.d(item);
         viewType.onSuccess(item);
       }
     }, new BiConsumer<ViewType, Throwable>() {

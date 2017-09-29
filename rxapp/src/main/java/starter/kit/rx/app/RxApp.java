@@ -25,6 +25,7 @@ public class RxApp extends StarterApp {
     Fresco.initialize(appContext());
 
     InitializeUtil.initialize();
+
   }
 
   @Override protected void attachBaseContext(Context base) {

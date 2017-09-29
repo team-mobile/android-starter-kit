@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.widget.ImageView;
+
 import com.bumptech.glide.Glide;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.backends.pipeline.PipelineDraweeController;
@@ -15,6 +16,9 @@ import com.mikepenz.iconics.IconicsDrawable;
 import com.mikepenz.materialdrawer.util.AbstractDrawerImageLoader;
 import com.mikepenz.materialdrawer.util.DrawerImageLoader;
 import com.mikepenz.materialdrawer.util.DrawerUIUtils;
+import com.orhanobut.logger.AndroidLogAdapter;
+import com.orhanobut.logger.Logger;
+
 import starter.kit.rx.app.R;
 import starter.kit.util.Hud;
 import starter.kit.util.ImageLoader;
@@ -26,6 +30,8 @@ public class InitializeUtil {
     initializeDrawerImageLoader();
     initializeImageLoader();
     initializeHud();
+    // init Logger 初始化多次
+    Logger.addLogAdapter(new AndroidLogAdapter());
   }
 
   private static void initializeDrawerImageLoader() {

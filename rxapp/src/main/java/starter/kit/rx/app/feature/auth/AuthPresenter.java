@@ -17,6 +17,7 @@ public class AuthPresenter extends NetworkPresenter<User, LoginActivity> {
 
   private AuthService mAuthService;
 
+  //存储在 Icepick
   @State String username;
   @State String password;
 
@@ -26,7 +27,7 @@ public class AuthPresenter extends NetworkPresenter<User, LoginActivity> {
   }
 
   @Override public Observable<User> request() {
-    return mAuthService.login(username, password);
+    return mAuthService.login(username, password,"2","android");
   }
 
   @Override public void showHud() {

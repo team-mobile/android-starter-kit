@@ -2,9 +2,6 @@ package starter.kit.util;
 
 import android.app.Activity;
 
-import com.orhanobut.logger.AndroidLogAdapter;
-import com.orhanobut.logger.Logger;
-
 import support.ui.utilities.KeyboardUtils;
 
 import static support.ui.utilities.Preconditions.checkNotNull;
@@ -23,8 +20,6 @@ public class StarterCommon {
   private StarterCommon(Activity activity) {
     checkNotNull(activity, "activity == null");
     this.activity = activity;
-    // init Logger
-    Logger.addLogAdapter(new AndroidLogAdapter());
   }
 
   public void onDestroy() {

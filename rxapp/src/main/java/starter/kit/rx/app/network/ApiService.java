@@ -20,15 +20,6 @@ public class ApiService {
     return Network.get().retrofit();
   }
 
-//  private static Retrofit retJxRofit() {
-//    return new Network.Builder()
-//            .networkDebug(true)
-//            .accept(Profile.JX_API_ACCEPT)
-//            .baseUrl(JX_API_BASE_URL)
-//            .build()
-//            .retrofit();
-//  }
-
   public static NewsService createXYNewsService() {
     return retrofit().create(NewsService.class);
   }
