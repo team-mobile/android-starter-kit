@@ -5,11 +5,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.io.IOException;
-
 import io.reactivex.functions.Action;
 import nucleus5.presenter.Presenter;
 import starter.kit.retrofit.ErrorResponse;
+import starter.kit.retrofit.RetrofitException;
 import starter.kit.rx.R;
 import starter.kit.util.ErrorHandler;
 import starter.kit.util.NetworkContract;
@@ -47,6 +46,7 @@ public abstract class StarterNetworkFragment<T, P extends Presenter>
      * {@link ContentPresenter#onCreate(Context)}
      * contentPresenter 会把 context 保存起来.
      * 然后还会执行
+     *
      * @param bundle
      */
     @Override
@@ -129,6 +129,7 @@ public abstract class StarterNetworkFragment<T, P extends Presenter>
      * contentPresenter 会通过反射来构造,
      * 注意这个 errorViewClass 要 implement ErrorView 这个接口,
      * contentPresenter 然后会调用这个 errorView 的一些方法.
+     *
      * @param throwable
      */
     @Override
@@ -139,13 +140,23 @@ public abstract class StarterNetworkFragment<T, P extends Presenter>
             getContentPresenter().buildErrorTitle(String.valueOf(mErrorResponse.getStatusCode()));
             getContentPresenter().buildErrorImageView(R.drawable.error);
         } else {
-            getContentPresenter().buildErrorSubtitle(throwable.getMessage());
-            getContentPresenter().buildErrorTitle(R.string.starter_error_title_some_question_placeholder);
-            getContentPresenter().buildErrorImageView(R.drawable.error);
+            RetrofitException retrofitException = (RetrofitException) throwable;
+            // Logger.e(retrofitException.getKind().toString() + " |" + retrofitException.getMessage());
+            if (null != retrofitException) {
+                if (retrofitException.getKind() == RetrofitException.Kind.NETWORK) {
+                    getContentPresenter().buildErrorImageView(R.drawable.support_ui_network_error);
+                } else {
+                    getContentPresenter().buildErrorSubtitle(throwable.getMessage());
+                    getContentPresenter().buildErrorTitle(R.string.starter_error_title_some_question_placeholder);
+                    getContentPresenter().buildErrorImageView(R.drawable.error);
+                }
+            } else {
+                getContentPresenter().buildErrorSubtitle(throwable.getMessage());
+                getContentPresenter().buildErrorTitle(R.string.starter_error_title_some_question_placeholder);
+                getContentPresenter().buildErrorImageView(R.drawable.error);
+            }
         }
-        if (throwable instanceof IOException) {
-            getContentPresenter().buildErrorImageView(R.drawable.support_ui_network_error);
-        }
+
     }
 
     @Override

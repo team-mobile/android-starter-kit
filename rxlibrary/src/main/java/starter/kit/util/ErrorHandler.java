@@ -1,6 +1,7 @@
 package starter.kit.util;
 
 import java.io.IOException;
+
 import starter.kit.retrofit.ErrorResponse;
 import starter.kit.retrofit.RetrofitException;
 
