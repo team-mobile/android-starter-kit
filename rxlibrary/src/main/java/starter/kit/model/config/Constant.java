@@ -6,7 +6,7 @@ package starter.kit.model.config;
 
 public interface Constant {
 
-    static final String BASE_URL_HEADER_KEY = "base_url";
+    String BASE_URL_HEADER_KEY = "base_url";
     int TIMEOUT_WRITE = 10;
     int TIMEOUT_READ = 10;
     int TIMEOUT_CONNECTION = 15;
