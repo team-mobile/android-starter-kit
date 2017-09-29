@@ -1,13 +1,14 @@
 package starter.kit.pagination;
 
-import io.reactivex.functions.Consumer;
 import java.util.ArrayList;
+
+import io.reactivex.functions.Consumer;
 import starter.kit.app.StarterFragConfig;
 import starter.kit.model.entity.Entity;
 import support.ui.collect.Lists;
 
 /**
- * @author <a href="mailto:smartydroid.com@gmail.com">Smartydroid</a>
+ *
  */
 public class PaginatorEmitter<E extends Entity> implements Emitter<E>, PaginatorContract<E> {
 
@@ -22,8 +23,17 @@ public class PaginatorEmitter<E extends Entity> implements Emitter<E>, Paginator
   private String firstPaginatorKey;
   private String nextPaginatorKey;
 
-  private ArrayList<E> requestedItems = Lists.newArrayList();
+  private ArrayList<E> requestedItems = Lists.newArrayList();  //重要变量，从第一个id/第一页开始, 网络请求获取到的所有数据.
 
+  /**
+   * <ul>
+   *     <li>把fragConfig保存起来, 内部变量currentPage等于fragConfig.getStartPage(),这个默认值是1 </li>
+   *     <li>onRequest保存起来, 内部变量hasMoreData和isLoading设为true  </li>
+   *     <li>通过fragConfig判断是通过分页还是key获取数据, 这里涉及到2个内部变量:String firstPaginatorKey, nextPaginatorKey. 如果是分页, 这2个变量为currentPage; 如果是key, 那就为null </li>
+   * <ul/>
+   * @param fragConfig
+   * @param onRequest
+   */
   public PaginatorEmitter(StarterFragConfig fragConfig, Consumer<PaginatorEmitter<E>> onRequest) {
     this.mFragConfig = fragConfig;
     this.currentPage = fragConfig.getStartPage();

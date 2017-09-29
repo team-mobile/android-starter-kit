@@ -9,6 +9,9 @@ import nucleus5.factory.PresenterStorage;
 import nucleus5.presenter.Presenter;
 
 /**
+ * 这个类在构造的时候就会构造 ReflectionPresenterFactory, 用的是静态方法.
+ * 并且, fragment 并不是直接管理这个 PresenterFactory, 而是把它交给P resenterLifecycleDelegate 管理
+ *
  * This class adopts a View lifecycle to the Presenter`s lifecycle.
  *
  * @param <P> a type of the presenter.
@@ -46,6 +49,14 @@ public final class PresenterLifecycleDelegate<P extends Presenter> {
     }
 
     /**
+     * 如果 presenter 为 null,
+     * 则通过 factory 构造,
+     * 并调用 presenter 的 create 方法
+     * 第一次调用 getPresenter 的时候, presenter 才会被创建.
+     * 当 presenter 通过 factory 构造出来后,
+     * 有个叫 PresenterStorage 的类也会持有这个 presenter 的引用,
+     * 并在 presenter 那里注册一个监听, 当 presenter 要被销毁的时候,
+     * PresenterStorage 就会知道并也不再持有引用.
      * {@link ViewWithPresenter#getPresenter()}
      */
     public P getPresenter() {
@@ -88,6 +99,9 @@ public final class PresenterLifecycleDelegate<P extends Presenter> {
     }
 
     /**
+     * 在 delegate 的 onResume 方法里,
+     * 首先调用 getPresenter 方法, getPresenter完成后,把传入的参数(也就是 view )交给 presenter 保存.
+     * 这里可以看出, presenter 最晚会在界面第一次出现的时候被创建
      * {@link android.app.Activity#onResume()},
      * {@link android.app.Fragment#onResume()},
      * {@link android.view.View#onAttachedToWindow()}

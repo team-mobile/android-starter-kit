@@ -8,17 +8,20 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import butterknife.ButterKnife;
+
 import com.paginate.Paginate;
 import com.paginate.recycler.LoadingListItemSpanLookup;
-import io.reactivex.annotations.NonNull;
-import io.reactivex.exceptions.MissingBackpressureException;
-import io.reactivex.functions.Action;
-import io.reactivex.functions.Consumer;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import butterknife.ButterKnife;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.exceptions.MissingBackpressureException;
+import io.reactivex.functions.Action;
+import io.reactivex.functions.Consumer;
 import starter.kit.model.entity.Entity;
 import starter.kit.pagination.PaginatorContract;
 import starter.kit.pagination.PaginatorEmitter;
@@ -34,7 +37,7 @@ import static starter.kit.util.Utilities.isAdapterEmpty;
 import static support.ui.utilities.Objects.isNotNull;
 
 /**
- * @author <a href="mailto:smartydroid.com@gmail.com">Smartydroid</a>
+ *
  */
 public abstract class StarterRecyclerFragment<E extends Entity, PC extends PaginatorPresenter>
     extends StarterNetworkFragment<PaginatorContract<E>, PC>
@@ -86,6 +89,15 @@ public abstract class StarterRecyclerFragment<E extends Entity, PC extends Pagin
     super.buildFragConfig(fragConfig);
   }
 
+  /**
+   * 构造 EasyRecyclerAdapter
+   * @see EasyRecyclerAdapter
+   * 根据建议, 开发者在这里应该调用 buildFragConfig 方法,
+   * 参数为 StarterFragConfig, 建议通过 builder 构造.
+   * buildFragConfig 方法会配置 recyclerViewAdapter 的 viewHolderFactory 和 bind,
+   * 然后把StarterFragConfig保存起来.
+   * @param bundle
+   */
   @Override public void onCreate(Bundle bundle) {
     super.onCreate(bundle);
     mAdapter = new EasyRecyclerAdapter(getContext());
@@ -100,6 +112,17 @@ public abstract class StarterRecyclerFragment<E extends Entity, PC extends Pagin
     return inflater.inflate(getFragmentLayout(), container, false);
   }
 
+  /**
+   * 一, 找到 swipeRefreshLayout 和 RecyclerView
+   * 二, 初始化 RecyclerView, 就是通过 fragConfig 设置 layoutManager 等等
+   * 三, 这里通过一个叫Paginate的类, 来配置recyclerView的上拉加载更多.
+   * 首先判读 fragConfig 的 canAddLoadingListItem
+   * (canAddLoadingListItem 就是指需要加载更多的时候,要不要显示一个进度)
+   * 如果为 false, 跳过这一步. 用到了 RecyclerPaginate 类
+   * @see com.paginate.recycler.RecyclerPaginate
+   * @param view
+   * @param savedInstanceState
+   */
   @Override public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
 
@@ -208,6 +231,18 @@ public abstract class StarterRecyclerFragment<E extends Entity, PC extends Pagin
     });
   }
 
+  /**
+   * <ul>
+   *     <li>首先也是判断requestedItems是否为空, 如果为空, 说明是第一次获取,
+   *     就会把recyclerViewAdapter清空. (这个功能对应于下拉刷新, 因为下拉刷新肯定要把原来的数据清除). 然后把获取到的数据append进去. </li>
+   *     <li> 然后调用mPaginatorEmitter.received(paginatorContract), (这个paginatorContract是对获取的数据的包装).
+   * 进去received方法: 先把isLoading设为false, 把paginatorContract保存起来, 然后判断paginatorContract是否为空, 如果为空, 说明已经获得全部数据了, hasMoreData设为false. 如果不为空, 再看如果hasMoreData本身是true, 还是true; 否则就要看获取到的数据等不等于perpage(分页大小), 来判断还有没有更多数据. 最后, 涉及到2个内部变量:firstPaginatorKey和nextPaginatorKey, firstPaginatorKey设为requestItems的第一个的id, nextPaginatorKey设为最后一个的id.这2个变量就是用在PaginatorPresenter的request方法的那2个参数.
+   * 总的来看, 这个received方法干了2件事:判断是否获取了全部数据和保存下一页从哪里开始的信息. </li>
+   *    <li> mPaginate.setHasMoreDataToLoad(false) 这个方法的参数如果为true, 那就显示那个上拉加载更多的圈圈; 为false就隐藏. </li>
+   *    <li> 最后判断现在的recyclerView是不是空的, 如果是空的, 就用contentPresenter显示emptyView.  </li>
+   * </ul>
+   * @param paginatorContract
+   */
   @Override public void onSuccess(PaginatorContract<E> paginatorContract) {
     ArrayList<? extends Entity> items = paginatorContract !=null ? paginatorContract.items() : Lists.newArrayList();
     if (mPaginatorEmitter.isFirstPage()) {
@@ -234,6 +269,11 @@ public abstract class StarterRecyclerFragment<E extends Entity, PC extends Pagin
     }
   }
 
+  /**
+   * 调用 mPaginatorEmitter.received(null),
+   * 这个表示已经获取全部数据
+   * @param throwable
+   */
   @Override public void onError(Throwable throwable) {
     super.onError(throwable);
 
@@ -259,6 +299,14 @@ public abstract class StarterRecyclerFragment<E extends Entity, PC extends Pagin
     }
   }
 
+  /**
+   * 发起网络请求
+   * 会调用 {@link PaginatorEmitter#requested()} ()} 来判断,
+   * 判断 requestedItems 是否为空,
+   * 如果为空,那就开始网络请求.
+   * 一开始的时候 requestedItems 肯定是空的,
+   * 所以在 onResume 里就会发起第一个网络请求了.
+   */
   @Override public void onResume() {
     super.onResume();
     if (isNotNull(mPaginatorEmitter) && !mPaginatorEmitter.requested()) {
@@ -278,6 +326,11 @@ public abstract class StarterRecyclerFragment<E extends Entity, PC extends Pagin
     mPaginate = null;
   }
 
+  /**
+   * 下拉刷新
+   * 首先判断是否正在请求, 如果正在请求, 那就显示SwipeRefreshLayout自带的进度条.
+   * 如果不是, 那就重置 PaginatorEmitter, 然后进行网络请求.
+   */
   @Override public void onRefresh() {
     setErrorResponse(null);
     if (isNotNull(mPaginatorEmitter) && !mPaginatorEmitter.isLoading()) {
@@ -289,6 +342,15 @@ public abstract class StarterRecyclerFragment<E extends Entity, PC extends Pagin
     }
   }
 
+  /**
+   * 当 recyclerView 滑动到需要加载的位置时, 会调用 isLoading 和 hasLoadedAllItems 这 2 个方法来看要不要发起网络请求,
+   * 这2个方法在 StarterRecyclerFragment 实现的.
+   * 先看 isLoading 方法: 判断 mPaginatorEmitter 的 isLoading 和 swipeRefreshLayout 的 isRefreshing, 只要其中一个满足, 就会返回true.
+   * 这个设计是为了解决 多次滑到底部导致发起多次重复的网络请求 这个问题.
+   * 再看 hasLoadedAllItems 方法: 判断 mPaginatorEmitter 的 hasMoreData.
+   * 这2个方法都通过, 就到 onLoadMore 方法了, 经过一堆的双保险判断, 就会显示显示那个上拉加载更多的圈圈, 并发起网络请求.
+   * 上拉加载更多
+   */
   // Paginate delegate
   @Override public void onLoadMore() {
     if (isNotNull(mPaginate) && isNotNull(mPaginatorEmitter)

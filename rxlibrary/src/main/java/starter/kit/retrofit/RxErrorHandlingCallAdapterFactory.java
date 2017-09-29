@@ -16,7 +16,7 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
 /**
- * @author <a href="mailto:smartydroid.com@gmail.com">Smartydroid</a>
+ *
  */
 public class RxErrorHandlingCallAdapterFactory extends CallAdapter.Factory {
 

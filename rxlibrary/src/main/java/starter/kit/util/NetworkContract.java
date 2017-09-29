@@ -1,7 +1,10 @@
 package starter.kit.util;
 
 /**
- * @author <a href="mailto:smartydroid.com@gmail.com">Smartydroid</a>
+ * view 接口
+ * ContentInterface 接口
+ * HudInterface 接口
+ * ProgressInterface 接口
  */
 public interface NetworkContract {
 

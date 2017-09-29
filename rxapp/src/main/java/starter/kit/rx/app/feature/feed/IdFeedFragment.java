@@ -16,6 +16,15 @@ public class IdFeedFragment extends StarterRecyclerFragment<Feed, IdFeedPresente
     return new IdFeedFragment();
   }
 
+  /**
+   * 开发者在这里应该调用 buildFragConfig 方法,
+   * 参数为 StarterFragConfig, 建议通过 builder 构造.
+   * buildFragConfig 方法会配置 recyclerViewAdapter 的 viewHolderFactory 和 bind,
+   * 然后把 StarterFragConfig 保存起来.
+   * @see starter.kit.app.StarterFragConfig.Builder
+   * #
+   * @param bundle
+   */
   @Override public void onCreate(Bundle bundle) {
     super.onCreate(bundle);
     StarterFragConfig.Builder builder = new StarterFragConfig.Builder()

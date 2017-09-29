@@ -12,6 +12,16 @@ import java.lang.reflect.Constructor;
 import support.ui.utilities.LayoutHelper;
 import support.ui.widget.R;
 
+/**
+ * 独立类，
+ * 没有继承 Presenter 基类
+ * 负责显示加载中,
+ * 显示网络错误,
+ * 显示空白
+ * ContentPresenter
+ * 是通过注解（ RequiresContent ）获取到参数,
+ * 然后构造。
+ */
 public final class ContentPresenter {
 
   private static final int ID_NONE = -1;
@@ -30,6 +40,13 @@ public final class ContentPresenter {
   private EmptyView.OnEmptyViewClickListener onEmptyViewClickListener;
   private ErrorView.OnErrorViewClickListener onErrorViewClickListener;
 
+  /**
+   * 传入 3 个继承 view 的 Class 参数,
+   * 传入之后, 把这 3 个保存起来.
+   * @param loadViewClass
+   * @param emptyViewClass
+   * @param errorViewClass
+   */
   public ContentPresenter(Class<View> loadViewClass, Class<View> emptyViewClass, Class<View> errorViewClass) {
     buildViewClassArray(loadViewClass, emptyViewClass, errorViewClass);
   }
@@ -75,6 +92,7 @@ public final class ContentPresenter {
 
   /**
    * 显示进度条
+   * contentPresenter 会先检查是否已经展示了 loadView.
    */
   public ContentPresenter displayLoadView() {
     final int loadViewId = LoadViewId;
@@ -255,9 +273,18 @@ public final class ContentPresenter {
     return this;
   }
 
+  /**
+   * 通过删除 container 的内容,
+   * 再把 viewId 添加上去, 这样来显示 View.
+   * @param viewId
+   * @return
+   */
   private View displayView(@IdRes int viewId) {
+    // container 指最外层的 view
     final ViewGroup container = mContainer;
+    // 通过 viewId 找 view, 可以看成单例
     final View view = checkView(viewId);
+    // 宽和高都是 match_parent
     final ViewGroup.LayoutParams layoutParams = LayoutHelper.createViewGroupLayoutParams();
     container.removeAllViews();
 

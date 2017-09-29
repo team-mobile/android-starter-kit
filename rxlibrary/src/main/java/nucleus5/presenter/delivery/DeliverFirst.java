@@ -17,6 +17,12 @@ public class DeliverFirst<View, T> implements ObservableTransformer<T, Delivery<
         this.view = view;
     }
 
+    /**
+     * 如果 View 泛型已经脱离了 Presenter,
+     * 那结果就不会传递到处理的方法中.
+     * @param observable
+     * @return
+     */
     @Override
     public ObservableSource<Delivery<View, T>> apply(Observable<T> observable) {
         return observable.materialize()

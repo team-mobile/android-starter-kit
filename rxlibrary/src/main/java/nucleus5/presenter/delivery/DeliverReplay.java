@@ -20,6 +20,14 @@ public class DeliverReplay<View, T> implements ObservableTransformer<T, Delivery
         this.view = view;
     }
 
+    /**
+     * 首先也是 materialize 变换, 然后 onComplete 事件不会被传递,
+     * 订阅的是一个 ReplaySubject.
+     * ReplaySubject 就是: 当有 Observer 订阅的时候, 会发射所有的事件.
+     * 这里其实就是把除了 onComplete 的所有事件存到 ReplaySubject 中.
+     * @param observable
+     * @return
+     */
     @Override
     public Observable<Delivery<View, T>> apply(Observable<T> observable) {
         final ReplaySubject<Notification<T>> subject = ReplaySubject.create();

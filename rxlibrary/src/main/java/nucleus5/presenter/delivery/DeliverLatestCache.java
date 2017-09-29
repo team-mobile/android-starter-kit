@@ -17,6 +17,15 @@ public class DeliverLatestCache<View, T> implements ObservableTransformer<T, Del
         this.view = view;
     }
 
+    /**
+     * 首先调用 Observable.combineLatest,
+     * 这个方法可以把两个 Observable 发射的事件, 通过自定的方法合并成一个新事件.
+     * 第一个 Observable 就是 view, 第二个是对传入的 observable 进行 materialize 变换,再过滤掉 onComplete 事件;
+     * 自定方法是, 如果发射的泛型 View 不为 null ,则返回 Delivery ; 为 null, 就返回 null
+     * 最后也是过滤.
+     * @param observable
+     * @return
+     */
     @Override
     public ObservableSource<Delivery<View, T>> apply(Observable<T> observable) {
         return Observable

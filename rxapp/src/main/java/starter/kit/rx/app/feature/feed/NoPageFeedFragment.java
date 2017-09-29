@@ -23,7 +23,7 @@ public class NoPageFeedFragment extends StarterRecyclerFragment<News, NewsPresen
     super.onCreate(bundle);
 
     StarterFragConfig.Builder builder = new StarterFragConfig.Builder()
-        .addLoadingListItem(false) // 是否分页
+        .addLoadingListItem(true) // 是否加载更多
         .pageSize(5)
         .bind(News.class, FeedsViewHolder.class)
         .recyclerViewDecor(new HorizontalDividerItemDecoration

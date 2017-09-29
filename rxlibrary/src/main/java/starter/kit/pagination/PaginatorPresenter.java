@@ -20,7 +20,7 @@ import static io.reactivex.android.schedulers.AndroidSchedulers.mainThread;
 import static io.reactivex.schedulers.Schedulers.io;
 
 /**
- * @author <a href="mailto:smartydroid.com@gmail.com">Smartydroid</a>
+ *
  */
 public abstract class PaginatorPresenter<T extends PaginatorContract> extends StarterPresenter<StarterRecyclerFragment> {
 

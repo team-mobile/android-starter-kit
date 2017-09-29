@@ -12,13 +12,24 @@ import support.ui.adapters.debounced.DebouncedOnLongClickListener;
 import static support.ui.adapters.EasyViewHolder.OnItemClickListener;
 import static support.ui.adapters.EasyViewHolder.OnItemLongClickListener;
 
+/**
+ * 对一些常用操作进行了封装, 方便使用.
+ */
 public class EasyRecyclerAdapter extends RecyclerView.Adapter<EasyViewHolder> {
 
+  //Object说明可以放任何数据
   private List<Object> dataList = new ArrayList<>();
   private BaseEasyViewHolderFactory viewHolderFactory;
   private OnItemClickListener itemClickListener;
   private OnItemLongClickListener longClickListener;
 
+  /**
+   * 这个构造方法会 构造出 ViewHolderFactory,
+   * bind 方法其实就是调用 {@link BaseEasyViewHolderFactory#bind(Class, Class)} 方法.
+   * @param context
+   * @param valueClass
+   * @param easyViewHolderClass
+   */
   public EasyRecyclerAdapter(Context context, Class valueClass,
       Class<? extends EasyViewHolder> easyViewHolderClass) {
     this(context);
@@ -47,12 +58,22 @@ public class EasyRecyclerAdapter extends RecyclerView.Adapter<EasyViewHolder> {
     viewHolderFactory.bind(valueClass, viewHolder);
   }
 
+  /**
+   *
+   * @param parent
+   * @param viewType
+   * @return
+   */
   @Override public EasyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
     EasyViewHolder easyViewHolder = viewHolderFactory.create(viewType, parent);
     bindListeners(easyViewHolder);
     return easyViewHolder;
   }
 
+  /**
+   * 把 EasyViewHolder 的点击事件接口的实例发送给 viewHolder.
+   * @param easyViewHolder
+   */
   protected void bindListeners(EasyViewHolder easyViewHolder) {
     if (easyViewHolder != null) {
       easyViewHolder.setItemClickListener(itemClickListener);
@@ -60,6 +81,12 @@ public class EasyRecyclerAdapter extends RecyclerView.Adapter<EasyViewHolder> {
     }
   }
 
+  /**
+   * 调用 easyViewHolder 的 bindTo方法.
+   * {@link EasyViewHolder#bindTo(int, Object)}
+   * @param holder
+   * @param position
+   */
   @SuppressWarnings("unchecked") @Override public void onBindViewHolder(EasyViewHolder holder, int position) {
     holder.bindTo(position, dataList.get(position));
   }
@@ -72,22 +99,44 @@ public class EasyRecyclerAdapter extends RecyclerView.Adapter<EasyViewHolder> {
     return dataList.size();
   }
 
+  /**
+   * 提供了新增数据方法,
+   * 修改 dataList, 然后调用 notifyItemInserted 方法.
+   * @see android.support.v7.widget.RecyclerView#getAdapter#ViewHolder#notifyItemInserted(int)
+   * @param object
+   * @param position
+   */
   public void add(Object object, int position) {
     dataList.add(position, object);
     notifyItemInserted(position);
   }
 
+  /**
+   * 修改 dataList, 然后调用 notifyItemInserted 方法.
+   * @see android.support.v7.widget.RecyclerView#getAdapter#ViewHolder#notifyItemInserted(int)
+   * @param object
+   */
   public void add(Object object) {
     dataList.add(object);
     notifyItemInserted(getIndex(object));
   }
 
+  /**
+   * 修改 dataList, 然后调用 notifyDataSetChanged 方法.
+   * @see android.support.v7.widget.RecyclerView#getAdapter#ViewHolder#notifyDataSetChanged()
+   * @param objects
+   */
   public void addAll(List<?> objects) {
     dataList.clear();
     dataList.addAll(objects);
     notifyDataSetChanged();
   }
 
+  /**
+   * 修改 dataList, 然后调用 notifyItemRangeInserted 方法.
+   * @see android.support.v7.widget.RecyclerView#getAdapter#ViewHolder#notifyItemRangeChanged(int, int)
+   * @param objects
+   */
   public void appendAll(List<?> objects) {
     if (objects == null) {
       throw new IllegalArgumentException("objects can not be null");
@@ -131,6 +180,12 @@ public class EasyRecyclerAdapter extends RecyclerView.Adapter<EasyViewHolder> {
     return dataList.contains(data) && remove(getIndex(data));
   }
 
+  /**
+   * 修改 dataList, 然后调用 notifyItemRemoved 方法.
+   * @see android.support.v7.widget.RecyclerView#getAdapter#ViewHolder#notifyItemRemoved(int)
+   * @param position
+   * @return
+   */
   public boolean remove(int position) {
     boolean validIndex = isValidIndex(position);
     if (validIndex) {
@@ -140,6 +195,10 @@ public class EasyRecyclerAdapter extends RecyclerView.Adapter<EasyViewHolder> {
     return validIndex;
   }
 
+  /**
+   * 修改 dataList, 然后调用 notifyDataSetChanged 方法.
+   * @see android.support.v7.widget.RecyclerView#getAdapter#ViewHolder#notifyDataSetChanged
+   */
   public void clear() {
     dataList.clear();
     notifyDataSetChanged();

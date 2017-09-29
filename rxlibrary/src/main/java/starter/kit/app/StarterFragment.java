@@ -15,6 +15,7 @@ import starter.kit.util.StarterCommon;
 
 
 /**
+ * http://blog.csdn.net/n6323438/article/details/56495348
  * @author <a href="mailto:smartydroid.com@gmail.com">Smartydroid</a>
  */
 public abstract class StarterFragment<P extends Presenter> extends NucleusSupportFragment<P> {
@@ -32,6 +33,7 @@ public abstract class StarterFragment<P extends Presenter> extends NucleusSuppor
       }
     });
     super.onCreate(bundle);
+    // 恢复 bundle
     Icepick.restoreInstanceState(this, bundle);
 
     starterCommon = StarterCommon.create(getActivity());
@@ -39,6 +41,7 @@ public abstract class StarterFragment<P extends Presenter> extends NucleusSuppor
 
   @Override public void onSaveInstanceState(Bundle bundle) {
     super.onSaveInstanceState(bundle);
+    // 存储 bundle
     Icepick.saveInstanceState(this, bundle);
   }
 

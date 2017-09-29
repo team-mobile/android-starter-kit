@@ -8,6 +8,9 @@ import nucleus5.factory.ReflectionPresenterFactory;
 import nucleus5.presenter.Presenter;
 
 /**
+ * NucleusSupportFragment 连接了view 和 presenter,
+ * 当 activity 处于不可交互状态时, presenter 不再持有 view.
+ * 而且解决了activity的Configurations变化时,presenter反复构造的问题.
  * This view is an example of how a view should control it's presenter.
  * You can inherit from this class or copy/paste this class's code to
  * create your own view implementation.
@@ -49,6 +52,11 @@ public abstract class NucleusSupportFragment<P extends Presenter> extends Fragme
         return presenterDelegate.getPresenter();
     }
 
+    /**
+     * 如果 bundle 不为 null,
+     * 则通过 bundle 恢复 presenter
+     * @param bundle
+     */
     @Override
     public void onCreate(Bundle bundle) {
         super.onCreate(bundle);
@@ -62,18 +70,33 @@ public abstract class NucleusSupportFragment<P extends Presenter> extends Fragme
         bundle.putBundle(PRESENTER_STATE_KEY, presenterDelegate.onSaveInstanceState());
     }
 
+    /**
+     * 就是调用了presenterDelegate 的 onResume 方法,
+     * 参数为fragment自己,
+     */
     @Override
     public void onResume() {
         super.onResume();
         presenterDelegate.onResume(this);
     }
 
+    /**
+     * 调用 delegate 的 onDropView 方法,
+     * 就是让 presenter 不再持有 view 的引用, view=null
+     */
     @Override
     public void onPause() {
         super.onPause();
         presenterDelegate.onDropView();
     }
 
+    /**
+     * 也是调用 delegate 的 onDestroy 方法
+     * 这个方法先看是不是 activity 要重启(例如横竖屏转换),
+     * 如果 activity 不是重启而是真的要 destroy 了,
+     * presenter 就会调用上面提到的那个监听,
+     * 然后 delegate 放弃对 presenter 的引用(presenter = null).
+     */
     @Override
     public void onDestroy() {
         super.onDestroy();

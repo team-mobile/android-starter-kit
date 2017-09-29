@@ -32,9 +32,9 @@ public class RxPresenter<View> extends Presenter<View> {
     private final BehaviorSubject<OptionalView<View>> views = BehaviorSubject.create();
     private final CompositeDisposable disposables = new CompositeDisposable();
 
-    private final HashMap<Integer, Factory<Disposable>> restartables = new HashMap<>();
-    private final HashMap<Integer, Disposable> restartableDisposables = new HashMap<>();
-    private final ArrayList<Integer> requested = new ArrayList<>();
+    private final HashMap<Integer, Factory<Disposable>> restartables = new HashMap<>();   //请求
+    private final HashMap<Integer, Disposable> restartableDisposables = new HashMap<>();   //请求subscribe后的subscription
+    private final ArrayList<Integer> requested = new ArrayList<>();            //已经开始的请求对应的id
 
     /**
      * Returns an {@link Observable} that emits the current attached view or null.
@@ -67,6 +67,10 @@ public class RxPresenter<View> extends Presenter<View> {
     }
 
     /**
+     * 参数有 restartableId 和一个返回 Subscription 的 Func0 接口.
+     * 先 put 进去 restartables 这个 HashMap 中,
+     * 然后检查 requested 这个 ArrayList 中有没有传进来的 restartableId, 如果有, 就会取消这个请求并重新开始.
+     *
      * A restartable is any RxJava observable that can be started (subscribed) and
      * should be automatically restarted (re-subscribed) after a process restart if
      * it was still subscribed at the moment of saving presenter's state.
@@ -83,6 +87,8 @@ public class RxPresenter<View> extends Presenter<View> {
     }
 
     /**
+     * 首先调用 stop 方法, 然后把 restartableId 放进 requested 中,
+     * 然后取出对应的 Func0 接口并调用, 得到的 subscription 放进 restartableSubscriptions 中.
      * Starts the given restartable.
      *
      * @param restartableId id of the restartable
@@ -94,6 +100,8 @@ public class RxPresenter<View> extends Presenter<View> {
     }
 
     /**
+     * 从requested 中去除传入的 restartableId,
+     * 然后在 restartableSubscriptions 找到对应的 subscription, 并调用 unSubscribe.
      * Disposes a restartable
      *
      * @param restartableId id of a restartable.
@@ -117,6 +125,12 @@ public class RxPresenter<View> extends Presenter<View> {
     }
 
     /**
+     * 只会取发射的第一个事件;
+     *
+     * 这个方法可以对 observable 进行处理,
+     * 调用了 observableFactory 的 create 方法, 经过 compose 再 subscribe.
+     * 那么这个 compose 做了什么呢? 变换就在 DeliverFirst 这个类中.
+     *
      * This is a shortcut that can be used instead of combining together
      * {@link #restartable(int, Factory)},
      * {@link #deliverFirst()},
@@ -128,8 +142,10 @@ public class RxPresenter<View> extends Presenter<View> {
      * @param onError           a callback that will be called if the source observable emits onError.
      * @param <T>               the type of the observable.
      */
-    public <T> void restartableFirst(int restartableId, final Factory<Observable<T>> observableFactory,
-        final BiConsumer<View, T> onNext, @Nullable final BiConsumer<View, Throwable> onError) {
+    public <T> void restartableFirst(int restartableId,
+                                     final Factory<Observable<T>> observableFactory,
+                                     final BiConsumer<View, T> onNext,
+                                     @Nullable final BiConsumer<View, Throwable> onError) {
 
         restartable(restartableId, new Factory<Disposable>() {
             @Override
@@ -144,11 +160,15 @@ public class RxPresenter<View> extends Presenter<View> {
     /**
      * This is a shortcut for calling {@link #restartableFirst(int, Factory, BiConsumer, BiConsumer)} with the last parameter = null.
      */
-    public <T> void restartableFirst(int restartableId, final Factory<Observable<T>> observableFactory, final BiConsumer<View, T> onNext) {
+    public <T> void restartableFirst(int restartableId,
+                                     final Factory<Observable<T>> observableFactory,
+                                     final BiConsumer<View, T> onNext) {
         restartableFirst(restartableId, observableFactory, onNext, null);
     }
 
     /**
+     * 每发射一个事件, 都会对应到当时的view状态
+     *
      * This is a shortcut that can be used instead of combining together
      * {@link #restartable(int, Factory)},
      * {@link #deliverLatestCache()},
@@ -160,8 +180,10 @@ public class RxPresenter<View> extends Presenter<View> {
      * @param onError           a callback that will be called if the source observable emits onError.
      * @param <T>               the type of the observable.
      */
-    public <T> void restartableLatestCache(int restartableId, final Factory<Observable<T>> observableFactory,
-        final BiConsumer<View, T> onNext, @Nullable final BiConsumer<View, Throwable> onError) {
+    public <T> void restartableLatestCache(int restartableId,
+                                           final Factory<Observable<T>> observableFactory,
+                                           final BiConsumer<View, T> onNext,
+                                           @Nullable final BiConsumer<View, Throwable> onError) {
 
         restartable(restartableId, new Factory<Disposable>() {
             @Override
@@ -176,11 +198,15 @@ public class RxPresenter<View> extends Presenter<View> {
     /**
      * This is a shortcut for calling {@link #restartableLatestCache(int, Factory, BiConsumer, BiConsumer)} with the last parameter = null.
      */
-    public <T> void restartableLatestCache(int restartableId, final Factory<Observable<T>> observableFactory, final BiConsumer<View, T> onNext) {
+    public <T> void restartableLatestCache(int restartableId,
+                                           final Factory<Observable<T>> observableFactory,
+                                           final BiConsumer<View, T> onNext) {
         restartableLatestCache(restartableId, observableFactory, onNext, null);
     }
 
     /**
+     * 会先把所有事件存起来,再一起发射
+     *
      * This is a shortcut that can be used instead of combining together
      * {@link #restartable(int, Factory)},
      * {@link #deliverReplay()},
@@ -192,8 +218,10 @@ public class RxPresenter<View> extends Presenter<View> {
      * @param onError           a callback that will be called if the source observable emits onError.
      * @param <T>               the type of the observable.
      */
-    public <T> void restartableReplay(int restartableId, final Factory<Observable<T>> observableFactory,
-        final BiConsumer<View, T> onNext, @Nullable final BiConsumer<View, Throwable> onError) {
+    public <T> void restartableReplay(int restartableId,
+                                      final Factory<Observable<T>> observableFactory,
+                                      final BiConsumer<View, T> onNext,
+                                      @Nullable final BiConsumer<View, Throwable> onError) {
 
         restartable(restartableId, new Factory<Disposable>() {
             @Override
@@ -208,7 +236,9 @@ public class RxPresenter<View> extends Presenter<View> {
     /**
      * This is a shortcut for calling {@link #restartableReplay(int, Factory, BiConsumer, BiConsumer)} with the last parameter = null.
      */
-    public <T> void restartableReplay(int restartableId, final Factory<Observable<T>> observableFactory, final BiConsumer<View, T> onNext) {
+    public <T> void restartableReplay(int restartableId,
+                                      final Factory<Observable<T>> observableFactory,
+                                      final BiConsumer<View, T> onNext) {
         restartableReplay(restartableId, observableFactory, onNext, null);
     }
 
@@ -259,7 +289,8 @@ public class RxPresenter<View> extends Presenter<View> {
      * @param <T>     a type on onNext value.
      * @return an Action1 that splits a received {@link Delivery} into two {@link BiConsumer} onNext and onError calls.
      */
-    public <T> Consumer<Delivery<View, T>> split(final BiConsumer<View, T> onNext, @Nullable final BiConsumer<View, Throwable> onError) {
+    public <T> Consumer<Delivery<View, T>> split(final BiConsumer<View, T> onNext,
+                                                 @Nullable final BiConsumer<View, Throwable> onError) {
         return new Consumer<Delivery<View, T>>() {
             @Override
             public void accept(Delivery<View, T> delivery) throws Exception {

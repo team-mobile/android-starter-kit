@@ -11,7 +11,7 @@ import support.ui.adapters.EasyViewHolder;
 import support.ui.collect.Maps;
 
 /**
- * @author <a href="mailto:smartydroid.com@gmail.com">Smartydroid</a>
+ *
  */
 public class StarterFragConfig {
 

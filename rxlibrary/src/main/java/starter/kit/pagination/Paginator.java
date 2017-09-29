@@ -7,7 +7,7 @@ import starter.kit.model.entity.Entity;
 import support.ui.collect.Lists;
 
 /**
- * @author <a href="mailto:smartydroid.com@gmail.com">Smartydroid</a>
+ *
  */
 @JsonIgnoreProperties(ignoreUnknown = true) public class Paginator<T extends Entity>
     extends AbstractPaginator<T> {

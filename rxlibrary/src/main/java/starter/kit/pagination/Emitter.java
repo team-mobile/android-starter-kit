@@ -3,7 +3,7 @@ package starter.kit.pagination;
 import starter.kit.model.entity.Entity;
 
 /**
- * @author <a href="mailto:smartydroid.com@gmail.com">Smartydroid</a>
+ *
  */
 public interface Emitter<E extends Entity> {
 

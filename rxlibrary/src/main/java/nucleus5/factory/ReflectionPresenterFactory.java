@@ -14,6 +14,9 @@ public class ReflectionPresenterFactory<P extends Presenter> implements Presente
     private Class<P> presenterClass;
 
     /**
+     * 传入一个 viewClass,
+     * 然后通过注解读取需要哪一个 presenter,
+     * 就得到 ReflectionPresenterFactory 了.
      * This method returns a {@link ReflectionPresenterFactory} instance if a given view class has
      * a {@link RequiresPresenter} annotation, or null otherwise.
      *

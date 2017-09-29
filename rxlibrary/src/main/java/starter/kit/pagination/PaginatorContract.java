@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import starter.kit.model.entity.Entity;
 
 /**
- * @author <a href="mailto:smartydroid.com@gmail.com">Smartydroid</a>
+ *
  */
 public interface PaginatorContract<E extends Entity> {
 
