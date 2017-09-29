@@ -79,15 +79,6 @@ public final class Network {
             if (mClient == null) {
                 OkHttpClient.Builder builder = new OkHttpClient.Builder();
 
-                // 网络异常检测 不完善
-                // builder.addInterceptor(new NetworkAvailableInterceptor());
-//                builder.addInterceptor(chain -> {
-//                    if (NetworkUtils.isConnected()) {
-//                        return chain.proceed(chain.request());
-//                    } else {
-//                        throw new RetrofitException("网络未连接",null,null, RetrofitException.Kind.NETWORK,null,null);
-//                    }
-//                });
                 if (headerBuilder == null) {
                     headerBuilder = defaultHeader();
                 }
