@@ -12,6 +12,8 @@ public interface Constant {
     static final String TAG_CONTENT = "ContentDemo";
     static final String TAG_IMAGE_CROP = "ImageCrop";
 
+    String JX_API_ACCEPT = "application/vnd.jxapi.v1.0+json";
+
 
     static final int REQUEST_STORAGE_READ_ACCESS_PERMISSION = 101;
     static final int REQUEST_STORAGE_WRITE_ACCESS_PERMISSION = 102;

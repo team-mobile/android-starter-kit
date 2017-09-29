@@ -7,4 +7,5 @@ public interface Account {
   String token();
 
   String toJson();
+
 }

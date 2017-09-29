@@ -8,6 +8,7 @@ import com.facebook.drawee.backends.pipeline.Fresco;
 import starter.kit.app.StarterApp;
 import starter.kit.model.entity.Account;
 import starter.kit.retrofit.Network;
+import starter.kit.rx.app.model.config.Constant;
 import starter.kit.rx.app.util.InitializeUtil;
 
 public class RxApp extends StarterApp {
@@ -17,8 +18,8 @@ public class RxApp extends StarterApp {
 
     new Network.Builder()
         .networkDebug(true)
-        .accept(Profile.API_ACCEPT)
-        .baseUrl(Profile.API_BASE_URL)
+        .accept(Constant.JX_API_ACCEPT)
+        .baseUrl(BuildConfig.API_HOST)
         .build();
 
     Fresco.initialize(appContext());

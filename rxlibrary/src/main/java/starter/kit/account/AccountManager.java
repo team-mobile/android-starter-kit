@@ -4,6 +4,7 @@ import android.content.Context;
 import android.text.TextUtils;
 import starter.kit.model.entity.Account;
 import starter.kit.app.StarterApp;
+import starter.kit.model.entity.TokenEntity;
 
 public enum AccountManager {
 
@@ -12,6 +13,7 @@ public enum AccountManager {
   private final AuthPreferences authPreferences;
   private Account mCurrentAccount;
   private Context mContext;
+  private TokenEntity mTokenEntity;
 
   AccountManager() {
     mContext = StarterApp.appContext();
