@@ -6,7 +6,9 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.parceler.Parcel;
 import starter.kit.model.entity.DefaultEntity;
 
-@Parcel @JsonIgnoreProperties(ignoreUnknown = true) public class User extends DefaultEntity {
+@Parcel
+@JsonIgnoreProperties(ignoreUnknown = false)
+public class User extends DefaultEntity {
   public String phone;
   public String nickname;
   public String avatar;
@@ -20,5 +22,15 @@ import starter.kit.model.entity.DefaultEntity;
     }
 
     return null;
+  }
+
+  @Override
+  public String toString() {
+    return "User{" +
+            "phone='" + phone + '\'' +
+            ", nickname='" + nickname + '\'' +
+            ", avatar='" + avatar + '\'' +
+            ", token='" + token + '\'' +
+            '}';
   }
 }

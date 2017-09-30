@@ -1,4 +1,4 @@
-package starter.kit.retrofit;
+package starter.kit.retrofit.interceptor;
 
 import okhttp3.Interceptor;
 

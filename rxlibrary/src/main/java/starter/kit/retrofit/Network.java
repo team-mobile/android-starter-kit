@@ -11,6 +11,10 @@ import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
+import starter.kit.retrofit.error.RxErrorHandlingCallAdapterFactory;
+import starter.kit.retrofit.interceptor.DefaultHeaderInterceptor;
+import starter.kit.retrofit.interceptor.ErrorHandlerInterceptor;
+import starter.kit.retrofit.interceptor.SignHeaderInterceptor;
 import support.ui.app.AppInfo;
 import support.ui.app.SupportApp;
 import support.ui.utilities.Preconditions;
@@ -89,6 +93,8 @@ public final class Network {
                 DefaultHeaderInterceptor headerInterceptor = new DefaultHeaderInterceptor(headerBuilder);
                 builder.addInterceptor(headerInterceptor);
                 builder.addInterceptor(new SignHeaderInterceptor());
+                // 异常拦截 and token 过期重新获取
+                builder.addInterceptor(new ErrorHandlerInterceptor());
 
                 // 超时设置
                 builder.readTimeout(TIMEOUT_READ, TimeUnit.SECONDS)

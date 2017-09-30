@@ -10,13 +10,19 @@ import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.BiConsumer;
 import io.reactivex.subjects.BehaviorSubject;
 import nucleus5.presenter.Factory;
-import starter.kit.retrofit.RetrofitException;
+import starter.kit.retrofit.error.RetrofitException;
 import starter.kit.util.NetworkContract;
 import starter.kit.util.RxUtils;
 
 import static io.reactivex.android.schedulers.AndroidSchedulers.mainThread;
 import static io.reactivex.schedulers.Schedulers.io;
 
+/**
+ * 单个网络请求，
+ * 非分页
+ * @param <T>
+ * @param <ViewType>
+ */
 public abstract class NetworkPresenter<T, ViewType extends NetworkContract.View> extends
     StarterPresenter<ViewType> implements NetworkContract.HudInterface {
 
@@ -36,14 +42,18 @@ public abstract class NetworkPresenter<T, ViewType extends NetworkContract.View>
     }, new BiConsumer<ViewType, T>() {
       @Override public void accept(@NonNull ViewType viewType, @NonNull T item) throws Exception {
         //noinspection unchecked
-        Logger.d(item);
+        // Logger.d("--- NetworkPresenter----- success:\n %s",item);
         viewType.onSuccess(item);
       }
     }, new BiConsumer<ViewType, Throwable>() {
       @Override public void accept(@NonNull ViewType viewType, @NonNull Throwable throwable)
           throws Exception {
         RetrofitException error = (RetrofitException) throwable;
-        viewType.onError(error);
+        if (null != error) {
+          viewType.onError(error);
+        } else {
+          viewType.onError(throwable);
+        }
       }
     });
   }

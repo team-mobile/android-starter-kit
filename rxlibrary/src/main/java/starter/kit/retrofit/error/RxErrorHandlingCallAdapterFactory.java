@@ -1,4 +1,4 @@
-package starter.kit.retrofit;
+package starter.kit.retrofit.error;
 
 import java.io.IOException;
 import java.lang.annotation.Annotation;

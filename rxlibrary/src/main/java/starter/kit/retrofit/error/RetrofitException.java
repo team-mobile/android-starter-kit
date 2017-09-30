@@ -1,15 +1,14 @@
-package starter.kit.retrofit;
-
-import com.orhanobut.logger.Logger;
+package starter.kit.retrofit.error;
 
 import java.io.IOException;
 import java.lang.annotation.Annotation;
+
 import okhttp3.ResponseBody;
 import retrofit2.Converter;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
-public class RetrofitException extends Throwable {
+public class RetrofitException extends RuntimeException {
   public static RetrofitException httpError(String url, Response response, Retrofit retrofit) {
     String message = response.code() + " " + response.message();
     return new RetrofitException(message, url, response, Kind.HTTP, null, retrofit);
@@ -80,7 +79,6 @@ public class RetrofitException extends Throwable {
       return null;
     }
     Converter<ResponseBody, T> converter = retrofit.responseBodyConverter(type, new Annotation[0]);
-    Logger.d(response.message()+" \n "+ response.code()+" \n "+ response.errorBody().string());
     return converter.convert(response.errorBody());
   }
 }

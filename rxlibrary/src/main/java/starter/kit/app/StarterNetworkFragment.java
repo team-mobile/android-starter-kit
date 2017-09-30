@@ -7,8 +7,8 @@ import android.view.ViewGroup;
 
 import io.reactivex.functions.Action;
 import nucleus5.presenter.Presenter;
-import starter.kit.retrofit.ErrorResponse;
-import starter.kit.retrofit.RetrofitException;
+import starter.kit.retrofit.error.ErrorResponse;
+import starter.kit.retrofit.error.RetrofitException;
 import starter.kit.rx.R;
 import starter.kit.util.ErrorHandler;
 import starter.kit.util.NetworkContract;
@@ -141,7 +141,6 @@ public abstract class StarterNetworkFragment<T, P extends Presenter>
             getContentPresenter().buildErrorImageView(R.drawable.error);
         } else {
             RetrofitException retrofitException = (RetrofitException) throwable;
-            // Logger.e(retrofitException.getKind().toString() + " |" + retrofitException.getMessage());
             if (null != retrofitException) {
                 if (retrofitException.getKind() == RetrofitException.Kind.NETWORK) {
                     getContentPresenter().buildErrorImageView(R.drawable.support_ui_network_error);

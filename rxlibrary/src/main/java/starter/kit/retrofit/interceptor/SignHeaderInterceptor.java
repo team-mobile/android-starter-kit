@@ -1,4 +1,4 @@
-package starter.kit.retrofit;
+package starter.kit.retrofit.interceptor;
 
 import android.util.Log;
 
