@@ -10,9 +10,6 @@ import support.ui.adapters.BaseEasyViewHolderFactory;
 import support.ui.adapters.EasyViewHolder;
 import support.ui.collect.Maps;
 
-/**
- *
- */
 public class StarterFragConfig {
 
   // adapter config

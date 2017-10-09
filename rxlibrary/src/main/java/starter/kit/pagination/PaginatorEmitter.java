@@ -7,9 +7,7 @@ import starter.kit.app.StarterFragConfig;
 import starter.kit.model.entity.Entity;
 import support.ui.collect.Lists;
 
-/**
- *
- */
+
 public class PaginatorEmitter<E extends Entity> implements Emitter<E>, PaginatorContract<E> {
 
   private final StarterFragConfig mFragConfig;

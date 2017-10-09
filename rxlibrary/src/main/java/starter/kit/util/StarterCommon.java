@@ -6,9 +6,7 @@ import support.ui.utilities.KeyboardUtils;
 
 import static support.ui.utilities.Preconditions.checkNotNull;
 
-/**
- * @author <a href="mailto:smartydroid.com@gmail.com">Smartydroid</a>
- */
+
 public class StarterCommon {
 
   private Activity activity;

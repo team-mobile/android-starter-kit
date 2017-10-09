@@ -18,10 +18,7 @@ import work.wanghao.simplehud.SimpleHUD;
 import static io.reactivex.android.schedulers.AndroidSchedulers.mainThread;
 import static io.reactivex.schedulers.Schedulers.io;
 
-/**
- * Created by YuGang Yang on 06 29, 2016.
- * Copyright 2015-2016 qiji.tech. All rights reserved.
- */
+
 public class SimpleHudActivity extends StarterActivity {
 
   private FeedService mFeedService;

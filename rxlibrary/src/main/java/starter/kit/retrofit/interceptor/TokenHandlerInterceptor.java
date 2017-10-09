@@ -19,8 +19,15 @@ import okhttp3.ResponseBody;
 import okhttp3.internal.http.HttpHeaders;
 import okio.Buffer;
 import okio.BufferedSource;
+import retrofit2.Call;
+import starter.kit.account.AccountManager;
+import starter.kit.model.entity.Account;
+import starter.kit.model.entity.TokenEntity;
+import starter.kit.retrofit.Network;
 import starter.kit.retrofit.error.ErrorResponse;
 import starter.kit.retrofit.error.RetrofitException;
+
+import static starter.kit.model.config.Constant.TOKEN_EXPIRE_ERROR_CODE;
 
 /**
  * http 服务端异常拦截器
@@ -28,7 +35,7 @@ import starter.kit.retrofit.error.RetrofitException;
  *     可以重新获取 token
  * Created by renwoxing on 2017/9/30.
  */
-public class ErrorHandlerInterceptor implements Interceptor {
+public class TokenHandlerInterceptor implements Interceptor {
 
     private static final Charset UTF8 = Charset.forName("UTF-8");
     @Override
@@ -67,11 +74,46 @@ public class ErrorHandlerInterceptor implements Interceptor {
             }
             if (contentLength != 0) {
                 ObjectMapper mapper = new ObjectMapper();
-                ErrorResponse errorResponse = mapper.readValue(buffer.clone().readByteArray(), ErrorResponse.class);
-                if (null != errorResponse && errorResponse.getStatusCode() != 0 && !TextUtils.isEmpty(errorResponse.getMessage())) {
-                    String result = buffer.clone().readString(charset);
-                    throw RetrofitException.unexpectedError(new Throwable(result));
-                }
+                try {
+                    ErrorResponse errorResponse = mapper.readValue(buffer.clone().readByteArray(), ErrorResponse.class);
+                    if (null != errorResponse && errorResponse.getStatusCode() != 0 && !TextUtils.isEmpty(errorResponse.getMessage())) {
+                        // token 部分处理
+                        // TODO: 2017/9/30 过期 token 刷新 需要测试
+                        if (errorResponse.getStatusCode() == TOKEN_EXPIRE_ERROR_CODE) {
+                            Account oldAccount = AccountManager.INSTANCE.getCurrentAccount();
+                            Call<TokenEntity> call = Network.get()
+                                    .retrofit()
+                                    .create(RefreshTokenService.class)
+                                    .refreshToken(AccountManager.INSTANCE.token(), AccountManager.INSTANCE.TokenEntity().refreshToken);
+                            //要用retrofit的同步方式
+                            TokenEntity newTokenEntity = call.execute().body();
+                            if (null != newTokenEntity && !TextUtils.isEmpty(newTokenEntity.accessToken)) {
+                                AccountManager.INSTANCE.storeAccount(new Account() {
+                                    @Override
+                                    public String name() {
+                                        return oldAccount.name();
+                                    }
+
+                                    @Override
+                                    public String token() {
+                                        return newTokenEntity.accessToken;
+                                    }
+
+                                    @Override
+                                    public String toJson() {
+                                        return newTokenEntity.toString();
+                                    }
+                                });
+                            }
+                            //再次转发请求
+                            // TODO: 2017/9/30 refresh token 也过期了。需要返回异常到前台通知
+                            return chain.proceed(request);
+                        } else {
+                            String result = buffer.clone().readString(charset);
+                            throw RetrofitException.unexpectedError(new Throwable(result));
+                        }
+                    }
+                }catch (Exception e){}
             }
         }
         return response;

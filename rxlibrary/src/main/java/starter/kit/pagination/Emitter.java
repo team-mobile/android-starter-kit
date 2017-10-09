@@ -2,9 +2,7 @@ package starter.kit.pagination;
 
 import starter.kit.model.entity.Entity;
 
-/**
- *
- */
+
 public interface Emitter<E extends Entity> {
 
   boolean isFirstPage();

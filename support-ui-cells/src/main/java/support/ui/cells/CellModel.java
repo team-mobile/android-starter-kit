@@ -2,10 +2,7 @@ package support.ui.cells;
 
 import android.graphics.drawable.Drawable;
 
-/**
- * Created by YuGang Yang on 04 07, 2016.
- * Copyright 2015-2016 qiji.tech. All rights reserved.
- */
+
 public class CellModel {
 
   public static final int VIEW_TYPE_EMPTY = 10000;

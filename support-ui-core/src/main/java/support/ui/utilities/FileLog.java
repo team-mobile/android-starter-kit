@@ -8,10 +8,7 @@ import java.util.Locale;
 import support.ui.app.SupportApp;
 import support.ui.time.FastDateFormat;
 
-/**
- * Created by YuGang Yang on 04 07, 2016.
- * Copyright 2015-2016 qiji.tech. All rights reserved.
- */
+
 public class FileLog {
   private OutputStreamWriter streamWriter = null;
   private FastDateFormat dateFormat = null;

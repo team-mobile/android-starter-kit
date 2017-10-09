@@ -36,9 +36,7 @@ import support.ui.collect.Lists;
 import static starter.kit.util.Utilities.isAdapterEmpty;
 import static support.ui.utilities.Objects.isNotNull;
 
-/**
- *
- */
+
 public abstract class StarterRecyclerFragment<E extends Entity, PC extends PaginatorPresenter>
     extends StarterNetworkFragment<PaginatorContract<E>, PC>
     implements com.paginate.Paginate.Callbacks,

@@ -33,13 +33,14 @@ import okio.BufferedSource;
 import retrofit2.Converter;
 import starter.kit.retrofit.error.ErrorResponse;
 import starter.kit.retrofit.error.RetrofitException;
+import starter.kit.retrofit.interceptor.TokenHandlerInterceptor;
 
 /**
  * 对 Response body 进行转换。
  * 也可以使用拦截处理
  *
  * @param <T>
- * @see starter.kit.retrofit.interceptor.ErrorHandlerInterceptor
+ * @see TokenHandlerInterceptor
  */
 // @Deprecated
 final public class JacksonJsonResponseBodyConverter<T> implements Converter<ResponseBody, T> {

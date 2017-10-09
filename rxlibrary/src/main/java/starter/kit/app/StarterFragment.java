@@ -14,10 +14,7 @@ import nucleus5.view.NucleusSupportFragment;
 import starter.kit.util.StarterCommon;
 
 
-/**
- * http://blog.csdn.net/n6323438/article/details/56495348
- * @author <a href="mailto:smartydroid.com@gmail.com">Smartydroid</a>
- */
+
 public abstract class StarterFragment<P extends Presenter> extends NucleusSupportFragment<P> {
 
   private Unbinder mUnbinder;

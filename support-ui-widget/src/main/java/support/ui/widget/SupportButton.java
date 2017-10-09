@@ -18,10 +18,7 @@ import support.ui.utilities.BuildCompat;
 import support.ui.utilities.ThemeCompat;
 import support.ui.utilities.ViewUtils;
 
-/**
- * Created by YuGang Yang on 04 13, 2016.
- * Copyright 2015-2016 qiji.tech. All rights reserved.
- */
+
 public class SupportButton extends AppCompatButton {
 
   private int mRippleColor;

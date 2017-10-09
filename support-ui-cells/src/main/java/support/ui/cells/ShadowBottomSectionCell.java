@@ -4,10 +4,7 @@ import android.content.Context;
 import android.view.View;
 import support.ui.utilities.AndroidUtilities;
 
-/**
- * Created by YuGang Yang on 04 07, 2016.
- * Copyright 2015-2016 qiji.tech. All rights reserved.
- */
+
 public class ShadowBottomSectionCell extends View {
 
   public ShadowBottomSectionCell(Context context) {

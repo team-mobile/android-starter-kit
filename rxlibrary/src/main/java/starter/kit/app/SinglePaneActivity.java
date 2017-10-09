@@ -1,8 +1,5 @@
 package starter.kit.app;
 
-/**
- * @author <a href="mailto:smartydroid.com@gmail.com">Smartydroid</a>
- */
 
 import android.content.Intent;
 import android.os.Bundle;

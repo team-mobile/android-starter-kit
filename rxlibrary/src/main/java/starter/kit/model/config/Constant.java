@@ -11,6 +11,8 @@ public interface Constant {
     int TIMEOUT_READ = 10;
     int TIMEOUT_CONNECTION = 15;
 
+    int TOKEN_EXPIRE_ERROR_CODE = 40102;
+
 
     class APIConfig {
 

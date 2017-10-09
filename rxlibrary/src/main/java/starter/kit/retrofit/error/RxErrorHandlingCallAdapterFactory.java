@@ -15,9 +15,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
-/**
- *
- */
+
 public class RxErrorHandlingCallAdapterFactory extends CallAdapter.Factory {
 
     private final RxJava2CallAdapterFactory original;

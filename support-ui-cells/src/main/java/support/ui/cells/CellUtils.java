@@ -3,10 +3,7 @@ package support.ui.cells;
 import android.content.Context;
 import support.ui.utilities.ThemeCompat;
 
-/**
- * Created by YuGang Yang on 04 08, 2016.
- * Copyright 2015-2016 qiji.tech. All rights reserved.
- */
+
 public final class CellUtils {
   private CellUtils() {
 

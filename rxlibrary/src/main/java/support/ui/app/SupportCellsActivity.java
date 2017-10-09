@@ -13,10 +13,7 @@ import support.ui.adapters.EasyViewHolder;
 import support.ui.cells.CellModel;
 import support.ui.cells.CellsViewHolderFactory;
 
-/**
- * Created by YuGang Yang on 04 09, 2016.
- * Copyright 2015-2016 qiji.tech. All rights reserved.
- */
+
 public abstract class SupportCellsActivity extends AppCompatActivity
     implements EasyViewHolder.OnItemClickListener {
 

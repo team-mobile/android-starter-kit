@@ -8,10 +8,7 @@ import support.ui.utilities.AndroidUtilities;
 import support.ui.utilities.Installation;
 import support.ui.utilities.ScreenUtils;
 
-/**
- * Created by YuGang Yang on 04 13, 2016.
- * Copyright 2015-2016 qiji.tech. All rights reserved.
- */
+
 public final class AppInfo {
 
   public String os;

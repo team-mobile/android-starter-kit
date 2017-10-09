@@ -13,7 +13,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
 import starter.kit.retrofit.error.RxErrorHandlingCallAdapterFactory;
 import starter.kit.retrofit.interceptor.DefaultHeaderInterceptor;
-import starter.kit.retrofit.interceptor.ErrorHandlerInterceptor;
+import starter.kit.retrofit.interceptor.TokenHandlerInterceptor;
 import starter.kit.retrofit.interceptor.SignHeaderInterceptor;
 import support.ui.app.AppInfo;
 import support.ui.app.SupportApp;
@@ -94,7 +94,7 @@ public final class Network {
                 builder.addInterceptor(headerInterceptor);
                 builder.addInterceptor(new SignHeaderInterceptor());
                 // 异常拦截 and token 过期重新获取
-                builder.addInterceptor(new ErrorHandlerInterceptor());
+                builder.addInterceptor(new TokenHandlerInterceptor());
 
                 // 超时设置
                 builder.readTimeout(TIMEOUT_READ, TimeUnit.SECONDS)

@@ -22,4 +22,5 @@ public interface FeedService {
   @GET("/posts/paginator") Observable<Paginator<Feed>> paginator(
       @Query("page") String page,
       @Query("page_size") int pageSize);
+
 }

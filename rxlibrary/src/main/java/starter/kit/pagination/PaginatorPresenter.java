@@ -19,9 +19,7 @@ import starter.kit.util.RxUtils;
 import static io.reactivex.android.schedulers.AndroidSchedulers.mainThread;
 import static io.reactivex.schedulers.Schedulers.io;
 
-/**
- *
- */
+
 public abstract class PaginatorPresenter<T extends PaginatorContract> extends StarterPresenter<StarterRecyclerFragment> {
 
   private static final int RESTARTABLE_ID = 100;

@@ -11,10 +11,6 @@ import android.support.annotation.DrawableRes;
 import android.support.v4.content.ContextCompat;
 import support.ui.preferences.PreferencesHelper;
 
-/**
- * Created by YuGang Yang on 04 07, 2016.
- * Copyright 2015-2016 qiji.tech. All rights reserved.
- */
 public class SupportApp extends Application {
 
   private static volatile Context sAppContext;

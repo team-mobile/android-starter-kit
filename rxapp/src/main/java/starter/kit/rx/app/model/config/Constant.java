@@ -26,7 +26,7 @@ public interface Constant {
 
 
     String JX_API_ACCEPT = "application/vnd.jxapi.v1.0+json";
-    String JX_API_PLATFORM = "android";
+    String JX_API_PLATFORM_ANDROID = "android";
 
     String JX_AUTH_API_ROLE_STUDENT  = "1";
     String JX_AUTH_API_ROLE_PARENTS  = "2";

@@ -9,10 +9,7 @@ import support.ui.utilities.AndroidUtilities;
 import support.ui.utilities.LayoutHelper;
 import support.ui.utilities.LocaleController;
 
-/**
- * Created by YuGang Yang on 04 07, 2016.
- * Copyright 2015-2016 qiji.tech. All rights reserved.
- */
+
 public class HeaderCell extends FrameLayout {
 
   private TextView textView;

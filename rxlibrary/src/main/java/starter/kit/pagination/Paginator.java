@@ -6,9 +6,7 @@ import java.util.ArrayList;
 import starter.kit.model.entity.Entity;
 import support.ui.collect.Lists;
 
-/**
- *
- */
+
 @JsonIgnoreProperties(ignoreUnknown = true) public class Paginator<T extends Entity>
     extends AbstractPaginator<T> {
 

@@ -7,10 +7,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
 
-/**
- * Created by YuGang Yang on 04 07, 2016.
- * Copyright 2015-2016 honc.tech. All rights reserved.
- */
+
 public class BaseCell extends View {
 
   private final class CheckForTap implements Runnable {

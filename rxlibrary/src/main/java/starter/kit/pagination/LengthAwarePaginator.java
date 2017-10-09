@@ -3,9 +3,6 @@ package starter.kit.pagination;
 import java.util.ArrayList;
 import starter.kit.model.entity.Entity;
 
-/**
- *
- */
 public class LengthAwarePaginator<T extends Entity> extends ArrayList<T>
     implements PaginatorContract<T> {
 

@@ -9,7 +9,9 @@ import android.widget.EditText;
 
 import com.jakewharton.rxbinding2.view.RxView;
 import com.jakewharton.rxbinding2.widget.RxTextView;
+import com.orhanobut.logger.Logger;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
@@ -20,7 +22,7 @@ import nucleus5.factory.RequiresPresenter;
 import starter.kit.app.StarterActivity;
 import starter.kit.retrofit.error.ErrorResponse;
 import starter.kit.rx.app.R;
-import starter.kit.rx.app.model.entity.User;
+import starter.kit.rx.app.model.entity.cloudweb.Organization;
 import starter.kit.util.ErrorHandler;
 import starter.kit.util.NetworkContract;
 import support.ui.app.SupportApp;
@@ -28,10 +30,7 @@ import work.wanghao.simplehud.SimpleHUD;
 
 import static io.reactivex.android.schedulers.AndroidSchedulers.mainThread;
 
-/**
- * Created by YuGang Yang on 06 29, 2016.
- * Copyright 2015-2016 qiji.tech. All rights reserved.
- */
+
 @RequiresPresenter(AuthPresenter.class)
 public class LoginActivity extends StarterActivity<AuthPresenter> implements
         NetworkContract.View {
@@ -162,15 +161,14 @@ public class LoginActivity extends StarterActivity<AuthPresenter> implements
 
     @Override
     public void onSuccess(Object item) {
-        User user = (User) item;
-        if (null != user) {
-            SimpleHUD.showInfoMessage(this, "登录成功" + user.toString());
-        }
+        List<Organization> organizations = (List<Organization>) item;
+        SimpleHUD.showInfoMessage(this, "登录成功! " + organizations.size());
     }
 
     @Override
     public void onError(Throwable exception) {
         ErrorResponse errorResponse = ErrorHandler.handleThrowable(exception);
+        Logger.e(exception,exception.getMessage());
         if (null != errorResponse) {
             SimpleHUD.showErrorMessage(this, errorResponse.getMessage());
         } else {

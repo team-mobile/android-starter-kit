@@ -4,9 +4,13 @@ import android.content.Context;
 import android.support.multidex.MultiDex;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.io.IOException;
 
 import starter.kit.app.StarterApp;
 import starter.kit.model.entity.Account;
+import starter.kit.model.entity.TokenEntity;
 import starter.kit.retrofit.Network;
 import starter.kit.rx.app.model.config.Constant;
 import starter.kit.rx.app.util.InitializeUtil;
@@ -35,6 +39,12 @@ public class RxApp extends StarterApp {
 
   @Override public Account provideAccount(String accountJson) {
     // 2016/11/10 Must Convert to Account Obj
+    ObjectMapper mapper = new ObjectMapper();
+    try {
+      TokenEntity token = mapper.readValue(accountJson,TokenEntity.class);
+    } catch (IOException e) {
+      //e.printStackTrace();
+    }
     return null;
   }
 }

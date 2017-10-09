@@ -2,10 +2,7 @@ package support.ui.utilities;
 
 import android.os.Build;
 
-/**
- * Created by YuGang Yang on 04 13, 2016.
- * Copyright 2015-2016 qiji.tech. All rights reserved.
- */
+
 public class BuildCompat {
 
   public static boolean hasICS() {

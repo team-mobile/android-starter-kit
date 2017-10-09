@@ -9,10 +9,7 @@ import android.view.Display;
 import java.lang.reflect.Method;
 import support.ui.app.SupportApp;
 
-/**
- * Created by YuGang Yang on 04 13, 2016.
- * Copyright 2015-2016 qiji.tech. All rights reserved.
- */
+
 public final class ScreenUtils {
 
   private static DisplayMetrics metrics;

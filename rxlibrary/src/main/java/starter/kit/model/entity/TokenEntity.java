@@ -29,4 +29,12 @@ public class TokenEntity {
     public String refreshToken;
     public int expireIn;
 
+    @Override
+    public String toString() {
+        return "TokenEntity{" +
+                "accessToken='" + accessToken + '\'' +
+                ", refreshToken='" + refreshToken + '\'' +
+                ", expireIn=" + expireIn +
+                '}';
+    }
 }

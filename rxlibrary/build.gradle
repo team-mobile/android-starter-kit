@@ -37,7 +37,11 @@ android {
   }
 
   buildTypes {
+    debug {
+      buildConfigField("String", "API_AUTH_HOST", "\"https://api.d.jx-cloud.cc/\"")
+    }
     release {
+      buildConfigField("String", "API_AUTH_HOST", "\"https://jxc.api.jxssy.com.cn/\"")
       minifyEnabled false
       proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
     }

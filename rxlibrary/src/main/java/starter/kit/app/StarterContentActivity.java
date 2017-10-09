@@ -9,9 +9,7 @@ import support.ui.content.EmptyView;
 import support.ui.content.ErrorView;
 import support.ui.content.ReflectionContentPresenterFactory;
 
-/**
- * @author <a href="mailto:smartydroid.com@gmail.com">Smartydroid</a>
- */
+
 public abstract class StarterContentActivity<P extends Presenter> extends StarterActivity<P>
     implements EmptyView.OnEmptyViewClickListener, ErrorView.OnErrorViewClickListener {
 

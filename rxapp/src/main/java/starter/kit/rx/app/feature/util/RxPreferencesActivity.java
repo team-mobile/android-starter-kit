@@ -4,19 +4,18 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.widget.CheckBox;
-import butterknife.BindView;
+
 import com.f2prateek.rx.preferences2.Preference;
 import com.f2prateek.rx.preferences2.RxSharedPreferences;
 import com.jakewharton.rxbinding2.widget.RxCompoundButton;
+
+import butterknife.BindView;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import starter.kit.app.StarterActivity;
 import starter.kit.rx.app.R;
 
-/**
- * Created by YuGang Yang on 06 29, 2016.
- * Copyright 2015-2016 qiji.tech. All rights reserved.
- */
+
 public class RxPreferencesActivity extends StarterActivity {
 
   @BindView(R.id.foo_1) CheckBox foo1Checkbox;

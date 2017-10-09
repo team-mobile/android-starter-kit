@@ -6,12 +6,14 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+
+import java.util.concurrent.TimeUnit;
+
 import butterknife.BindView;
 import butterknife.OnClick;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
-import java.util.concurrent.TimeUnit;
 import starter.kit.app.StarterActivity;
 import starter.kit.rx.app.R;
 import starter.kit.rx.app.feature.feed.FeedsViewHolder;
@@ -23,10 +25,7 @@ import support.ui.widget.SwipeRefreshLayout;
 
 import static io.reactivex.android.schedulers.AndroidSchedulers.mainThread;
 
-/**
- * Created by YuGang Yang on 07 19, 2016.
- * Copyright 2015-2016 qiji.tech. All rights reserved.
- */
+
 public class DirectionActivity extends StarterActivity
     implements SwipeRefreshLayout.OnRefreshListener, NetworkContract.ProgressInterface {
 

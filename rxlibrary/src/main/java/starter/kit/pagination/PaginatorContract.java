@@ -3,9 +3,7 @@ package starter.kit.pagination;
 import java.util.ArrayList;
 import starter.kit.model.entity.Entity;
 
-/**
- *
- */
+
 public interface PaginatorContract<E extends Entity> {
 
   /**
