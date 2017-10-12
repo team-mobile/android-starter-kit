@@ -2,6 +2,8 @@ package starter.kit.rx.app.feature.feed;
 
 import android.os.Bundle;
 
+import com.orhanobut.logger.Logger;
+
 import io.reactivex.Observable;
 import starter.kit.pagination.Paginator;
 import starter.kit.pagination.PaginatorPresenter;
@@ -27,6 +29,7 @@ public class NewsPresenter extends PaginatorPresenter<Paginator<News>> {
     }
 
     @Override public int restartableId() {
-        return 3000;
+        Logger.d("NewsPresenter hashCode : %s, this: %s", super.hashCode(),this.hashCode());
+        return hashCode();
     }
 }

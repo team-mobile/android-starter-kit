@@ -1,6 +1,11 @@
 package starter.kit.util;
 
 import android.content.Context;
+
+import org.reactivestreams.Publisher;
+
+import io.reactivex.Flowable;
+import io.reactivex.FlowableTransformer;
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
 import io.reactivex.ObservableTransformer;
@@ -8,6 +13,8 @@ import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Action;
 import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
+import starter.kit.model.entity.DefaultEntity;
 
 import static io.reactivex.android.schedulers.AndroidSchedulers.mainThread;
 
@@ -105,15 +112,45 @@ public final class RxUtils {
   public static Disposable empty(Action onTerminate) {
     return Observable.empty().observeOn(mainThread()).doOnTerminate(onTerminate).subscribe();
   }
-
   /**
    * unsubscribe Subscription
-   *
-   * @param subscription Subscription
+   * @param disposable
    */
   public static void unsubscribe(Disposable disposable) {
     if (disposable != null && disposable.isDisposed()) {
       disposable.dispose();
     }
   }
+
+  /**
+   * 异常处理变换
+   * // TODO: 2017/10/9 需要完善
+   * @return
+   */
+  public static <T extends DefaultEntity> FlowableTransformer<T, T> getApiTransformer() {
+
+    return new FlowableTransformer<T, T>() {
+      @Override
+      public Publisher<T> apply(Flowable<T> upstream) {
+        return upstream.flatMap(new Function<T, Publisher<T>>() {
+          @Override
+          public Publisher<T> apply(T model) throws Exception {
+
+//            if (model == null) {
+//              return Flowable.error(new RetrofitException(model.getErrorMsg(), NetError.NoDataError));
+//            } else if (model.isAuthError()) {
+//              return Flowable.error(new NetError(model.getErrorMsg(), NetError.AuthError));
+//            } else if (model.isBizError()) {
+//              return Flowable.error(new NetError(model.getErrorMsg(), NetError.BusinessError));
+//            } else {
+//              return Flowable.just(model);
+//            }
+            return Flowable.just(model);
+          }
+        });
+      }
+    };
+  }
+
+
 }

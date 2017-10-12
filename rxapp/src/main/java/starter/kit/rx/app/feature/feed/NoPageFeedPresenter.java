@@ -1,6 +1,9 @@
 package starter.kit.rx.app.feature.feed;
 
 import android.os.Bundle;
+
+import com.orhanobut.logger.Logger;
+
 import io.reactivex.Observable;
 import starter.kit.pagination.LengthAwarePaginator;
 import starter.kit.pagination.PaginatorPresenter;
@@ -23,6 +26,7 @@ public class NoPageFeedPresenter extends PaginatorPresenter<LengthAwarePaginator
   }
 
   @Override public int restartableId() {
-    return 1002;
+    Logger.d("NoPageFeedPresenter hashCode : %s, this: %s", super.hashCode(),this.hashCode());
+    return hashCode();
   }
 }

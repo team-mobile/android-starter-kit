@@ -2,9 +2,9 @@ package starter.kit.app;
 
 import android.os.Bundle;
 
-import com.orhanobut.logger.Logger;
 import com.trello.rxlifecycle2.android.FragmentEvent;
 import com.trello.rxlifecycle2.android.RxLifecycleAndroid;
+
 import io.reactivex.Observable;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.BiConsumer;
@@ -35,8 +35,8 @@ public abstract class NetworkPresenter<T, ViewType extends NetworkContract.View>
       @Override public Observable<T> create() {
         BehaviorSubject<FragmentEvent> lifecycle = BehaviorSubject.create();
         return request().subscribeOn(io())
-            .compose(RxUtils.hudTransformer(NetworkPresenter.this))
-            .compose(RxLifecycleAndroid.bindFragment(lifecycle))
+            .compose(RxUtils.hudTransformer(NetworkPresenter.this))  //统一 Hud loading 处理
+            .compose(RxLifecycleAndroid.bindFragment(lifecycle))     //内存泄漏处理
             .observeOn(mainThread());
       }
     }, new BiConsumer<ViewType, T>() {
